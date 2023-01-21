@@ -1,49 +1,53 @@
-"use strict"
-
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('sales', {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.createTable('sales', {
       id: {
         type: Sequelize.INTEGER,
-        field: 'id',
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      totalPrice: {
+      user_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      seller_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      total_price: {
         type: Sequelize.DECIMAL(9, 2),
-        field: 'total_price',
         allowNull: false
       },
-      deliveryAddress: {
-        type: Sequelize.STRING(100),
-        field: 'delivery_address',
+      delivery_address: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      deliveryNumber: {
-        type: Sequelize.STRING(50),
-        field: 'delivery_number',
+      delivery_number: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      saleDate: {
+      sale_date: {
         type: Sequelize.DATE,
-        field: 'sale_date',
         allowNull: false
       },
       status: {
-        type: Sequelize.STRING(50),
-        field: 'status',
+        type: Sequelize.STRING,
         allowNull: false
-      },
-      userId: {
-        type: Sequelize.INTEGER,
-        field: 'user_id'
-      },
-      sallerId: {
-        type: Sequelize.INTEGER,
-        field: 'saller_id'
       }
-    })
+    });
   },
   down: (queryInterface, _Sequelize) => {
     return queryInterface.dropTable('sales');

@@ -1,4 +1,4 @@
-const SaleModel = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const Sale = sequelize.define('Sale', {
     id: {
       type: DataTypes.INTEGER,
@@ -6,39 +6,42 @@ const SaleModel = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false
     },
-    totalPrice: {
+    user_id: {
+      type: DataTypes.INTEGER,
+      foreignKey: true
+    },
+    seller_id: {
+      type: DataTypes.INTEGER,
+      foreignKey: true
+    },
+    total_price: {
       type: DataTypes.DECIMAL(9, 2),
       allowNull: false
     },
-    deliveryAddress: {
-      type: DataTypes.STRING(100),
+    delivery_address: {
+      type: DataTypes.STRING,
       allowNull: false
     },
-    deliveryNumber: {
-      type: DataTypes.STRING(50),
+    delivery_number: {
+      type: DataTypes.STRING,
       allowNull: false
     },
-    saleDate: {
+    sale_date: {
       type: DataTypes.DATE,
       allowNull: false
     },
     status: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false
     }
-  },
-  {
+  }, {
     timestamps: false,
     tableName: 'sales',
     underscored: true,
-  })
-
-  Sale.belongsTo(User, {
-    as: 'id',
-    foreignKey: 'user_id'
-  })
-
+  });
+  Sale.associate = (models) => {
+    Sale.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    Sale.belongsTo(models.User, { foreignKey: 'seller_id', as: 'seller' });
+  };
   return Sale;
-}
-
-module.exports = SaleModel;
+};
