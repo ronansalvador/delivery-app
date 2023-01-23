@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from '../context/UserContext';
 
 export default function Login() {
+  const { theme, changeTheme } = useContext(UserContext);
   return (
-    <div>Login</div>
+    <button type="button" className={ `${theme}` } onClick={ changeTheme }>Login</button>
   );
 }
