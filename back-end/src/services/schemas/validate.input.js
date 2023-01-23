@@ -7,9 +7,8 @@ const validateLogin = async (user) => {
     return { type: 404, message: { message: 'Login inválido' } };
   }
   return { type: null, message: value };
-}
-
-module.exports = {
-  validateLogin
 };
 
+module.exports = {
+  validateLogin,
+};

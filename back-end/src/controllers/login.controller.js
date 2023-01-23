@@ -7,4 +7,4 @@ const validateLogin = async (req, res) => {
   return res.status(type).json(message);
 };
 
-module.exports = { validateLogin }
+module.exports = { validateLogin };
