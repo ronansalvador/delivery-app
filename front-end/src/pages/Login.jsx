@@ -27,7 +27,8 @@ export default function Login() {
       password,
     };
     try {
-      const response = await axios.post('url', data);
+      const response = await axios.post('http://localhost:3001/login', data);
+      console.log('response', response);
       if ('message' in response) return setLoginWarning(response.data);
       setUser(response.data);
       // Redireciona de acordo com a role
