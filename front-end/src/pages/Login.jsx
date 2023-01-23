@@ -11,6 +11,7 @@ export default function Login() {
   const [loginWarning, setLoginWarning] = useState({});
   const navigate = useNavigate();
 
+  // função que faz a validação dos inputs de email e senha e salva no estado
   const ValidateLogin = () => {
     const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     const validEmail = emailPattern.test(email);
@@ -19,7 +20,8 @@ export default function Login() {
     setValidLogin(validEmail && password.length > FIVE);
   };
 
-  const LoginOK = async () => {
+  // Faz POST no back-end para validar login, redireciona de acordo com a role ou salva mensagem de erro no estado
+  const handleLogin = async () => {
     const data = {
       email,
       password,
@@ -28,15 +30,17 @@ export default function Login() {
       const response = await axios.post('url', data);
       if ('message' in response) return setLoginWarning(response.data);
       setUser(response.data);
+      // Redireciona de acordo com a role
       if (response.data.role === 'customer') return navigate('/customer/produtos');
       if (response.data.role === 'seller') return navigate('/seller/orders');
       navigate('/admin/manage');
     } catch (error) {
-      console.log('error', error.message);
+      console.error('Error:', error.message);
       setLoginWarning({ message: error.message });
     }
   };
 
+  // Chama função de validação sempre que o Email ou Senha são alterados
   useEffect(() => {
     ValidateLogin();
   }, [email, password]);
@@ -72,7 +76,7 @@ export default function Login() {
         type="button"
         disabled={ !validLogin }
         data-testid="common_login__button-login"
-        onClick={ LoginOK }
+        onClick={ handleLogin }
       >
         Login
       </button>
@@ -89,7 +93,7 @@ export default function Login() {
       </button>
 
       <p
-        className={ `${!('message' in loginWarning) && 'hidden'}` }
+        className={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
         data-testid="common_login__element"
       >
         {loginWarning.message}
