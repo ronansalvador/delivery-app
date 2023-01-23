@@ -26,13 +26,21 @@ export default function Login() {
       email,
       password,
     };
+    // axios.post('http://localhost:3001/login/', data2)
+    //   .then((response) => response.data)
+    //   .then((data) => {
+    //     const stringfyData = JSON.stringify(data);
+    //     localStorage.setItem('user', stringfyData);
+    //     navigate(redirectObj[data.role]);
+    //   })
+    //   .catch(() => setLoginWarning({ message: error.message }));
     try {
       const response = await axios.post('http://localhost:3001/login', data);
       console.log('response', response);
       if ('message' in response) return setLoginWarning(response.data);
       setUser(response.data);
       // Redireciona de acordo com a role
-      if (response.data.role === 'customer') return navigate('/customer/produtos');
+      if (response.data.role === 'customer') return navigate('/customer/products');
       if (response.data.role === 'seller') return navigate('/seller/orders');
       navigate('/admin/manage');
     } catch (error) {
@@ -95,7 +103,7 @@ export default function Login() {
 
       <p
         className={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
-        data-testid="common_login__element"
+        data-testid="common_login__element-invalid-email"
       >
         {loginWarning.message}
       </p>

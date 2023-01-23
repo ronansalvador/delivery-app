@@ -1,14 +1,14 @@
 const { User } = require('../database/models');
 const { compareHash } = require('../utils/decyptMD5');
-const { validateLogin } = require('./schemas/validate.input');
+// const { validateLogin } = require('./schemas/validate.input');
 
 const login = async ({ email, password }) => {
-  // Valida se o input email e senha é estruturado da forma correta.
-  const error = validateLogin(email, password);
+  // // Valida se o input email e senha é estruturado da forma correta.
+  // const error = validateLogin(email, password);
 
-  if (error.type) {
-    return error;
-  }
+  // if (error.type) {
+  //   return error;
+  // }
   
   // Busca o compo "email" no banco de dados, retornando o email e tudo que está relacionado a ele.
   const emailValidate = await User.findOne({ where: { email }, raw: true });
