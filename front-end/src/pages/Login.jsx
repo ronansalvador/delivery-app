@@ -28,9 +28,9 @@ export default function Login() {
     };
     try {
       const response = await axios.post('http://localhost:3001/login', data);
-      console.log('response', response);
+      console.log('response', response.data);
       if ('message' in response) return setLoginWarning(response.data);
-      setUser(response.data);
+      await setUser(response.data);
       // Redireciona de acordo com a role
       if (response.data.role === 'customer') return navigate('/customer/products');
       if (response.data.role === 'seller') return navigate('/seller/orders');
