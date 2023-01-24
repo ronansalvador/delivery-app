@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import NavCustomerProducts from './NavCustomerProducts';
-import saveLocalStorage from '../helpers/saveLocalStorage';
 
 export default function Navbar() {
   const { user, setUser } = useContext(UserContext);
@@ -10,7 +9,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const HandleLogout = () => {
-    saveLocalStorage('user', undefined);
+    localStorage.removeItem('user');
     setUser({});
     navigate('/');
   };
