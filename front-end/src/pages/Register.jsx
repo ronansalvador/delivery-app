@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useContext } from 'react';
+import UserContext from '../context/UserContext';
+import validateEmail from '../helpers/validateEmail';
 
 export default function Register() {
   const { setUser } = useContext(UserContext);
@@ -12,8 +14,7 @@ export default function Register() {
 
   // função que faz a validação dos inputs de name, email e senha e salva no estado
   const ValidateLogin = () => {
-    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-    const validEmail = emailPattern.test(email);
+    const validEmail = validateEmail(email);
     const FIVE = 5;
     const ELEVEN = 11;
 
