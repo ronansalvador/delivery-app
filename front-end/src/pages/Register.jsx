@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useContext } from 'react';
 import UserContext from '../context/UserContext';
 import validateEmail from '../helpers/validateEmail';
+import saveLocalStorage from '../helpers/saveLocalStorage';
 
 export default function Register() {
   const { setUser } = useContext(UserContext);
@@ -29,6 +30,7 @@ export default function Register() {
       if ('message' in response) return setLoginWarning(response.data);
       setUser(response.data);
       // Após cadastro o usuário faz login automático e é redirecionado
+      saveLocalStorage('user', response.data);
       navigate('/customer/products');
     } catch (error) {
       console.error('Error:', error.message);

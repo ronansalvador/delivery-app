@@ -1,14 +1,18 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import NavCustomerProducts from './NavCustomerProducts';
+import saveLocalStorage from '../helpers/saveLocalStorage';
 
 export default function Navbar() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const { role, name } = user;
-  console.log(role);
+  const navigate = useNavigate();
 
   const HandleLogout = () => {
-    console.log('sair');
+    saveLocalStorage('user', undefined);
+    setUser({});
+    navigate('/');
   };
   return (
     <nav>

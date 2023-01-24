@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../context/UserContext';
 import validateEmail from '../helpers/validateEmail';
+import saveLocalStorage from '../helpers/saveLocalStorage';
 
 export default function Login() {
   const { setUser } = useContext(UserContext);
@@ -34,6 +35,7 @@ export default function Login() {
       if ('message' in response) return setLoginWarning(response.data);
       await setUser(response.data);
       // Redireciona de acordo com a role
+      saveLocalStorage('user', response.data);
       if (response.data.role === 'customer') return navigate('/customer/products');
       if (response.data.role === 'seller') return navigate('/seller/orders');
       navigate('/admin/manage');
