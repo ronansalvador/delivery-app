@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../context/UserContext';
+import validateEmail from '../helpers/validateEmail';
 
 export default function Login() {
   const { setUser } = useContext(UserContext);
@@ -13,8 +14,7 @@ export default function Login() {
 
   // função que faz a validação dos inputs de email e senha e salva no estado
   const ValidateLogin = () => {
-    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-    const validEmail = emailPattern.test(email);
+    const validEmail = validateEmail(email);
     const FIVE = 5;
 
     setValidLogin(validEmail && password.length > FIVE);
@@ -26,14 +26,6 @@ export default function Login() {
       email,
       password,
     };
-    // axios.post('http://localhost:3001/login/', data2)
-    //   .then((response) => response.data)
-    //   .then((data) => {
-    //     const stringfyData = JSON.stringify(data);
-    //     localStorage.setItem('user', stringfyData);
-    //     navigate(redirectObj[data.role]);
-    //   })
-    //   .catch(() => setLoginWarning({ message: error.message }));
     try {
       const response = await axios.post('http://localhost:3001/login', data);
       console.log('response', response);
@@ -58,7 +50,7 @@ export default function Login() {
   return (
     <div>
       <label htmlFor="login_email">
-
+        Login
         <input
           type="text"
           data-testid="common_login__input-email"
@@ -66,11 +58,11 @@ export default function Login() {
           placeholder="email"
           value={ email }
           onChange={ ({ target }) => setEmail(target.value) }
-
         />
       </label>
 
       <label htmlFor="login_password">
+        Senha
         <input
           type="password"
           data-testid="common_login__input-password"
