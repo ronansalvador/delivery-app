@@ -26,14 +26,6 @@ export default function Login() {
       email,
       password,
     };
-    // axios.post('http://localhost:3001/login/', data2)
-    //   .then((response) => response.data)
-    //   .then((data) => {
-    //     const stringfyData = JSON.stringify(data);
-    //     localStorage.setItem('user', stringfyData);
-    //     navigate(redirectObj[data.role]);
-    //   })
-    //   .catch(() => setLoginWarning({ message: error.message }));
     try {
       const response = await axios.post('http://localhost:3001/login', data);
       console.log('response', response);
