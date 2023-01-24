@@ -27,8 +27,10 @@ const login = async ({ email, password }) => {
     return { type: 404, message: { message: 'email ou senha incorretos' } };
   }
 
+  // Remove a senha do usuário, para gerar o token.
   const { password: _, ...userWithoutPassword } = emailValidate;
 
+  // Função que gera o token.
   const token = jwt.newToken(userWithoutPassword);
 
   // Retorna as informações informações do usuario, caso o login seja feito com sucesso.
