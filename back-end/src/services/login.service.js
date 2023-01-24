@@ -1,14 +1,15 @@
 const { User } = require('../database/models');
-const { compareHash } = require('../utils/decyptMD5');
-// const { validateLogin } = require('./schemas/validate.input');
+const { compareHash } = require('../utils/decyptConfig');
+const { validateLogin } = require('./schemas/validate.input');
+const jwt = require('../utils/jwtConfig');
 
 const login = async ({ email, password }) => {
-  // // Valida se o input email e senha é estruturado da forma correta.
-  // const error = validateLogin(email, password);
+  // Valida se o input email e senha é estruturado da forma correta.
+  const error = validateLogin(email, password);
 
-  // if (error.type) {
-  //   return error;
-  // }
+  if (error.type) {
+    return error;
+  }
   
   // Busca o compo "email" no banco de dados, retornando o email e tudo que está relacionado a ele.
   const emailValidate = await User.findOne({ where: { email }, raw: true });
@@ -26,9 +27,13 @@ const login = async ({ email, password }) => {
     return { type: 404, message: { message: 'email ou senha incorretos' } };
   }
 
+  const { password: _, ...userWithoutPassword } = emailValidate;
+
+  const token = jwt.newToken(userWithoutPassword);
+
   // Retorna as informações informações do usuario, caso o login seja feito com sucesso.
   const { name, role } = emailValidate;
-  return { type: 200, message: { name, email, role, token: 'r2398vz239sfa87238s3' } };
+  return { type: 200, message: { name, email, role, token } };
 };
 
 module.exports = { login };
