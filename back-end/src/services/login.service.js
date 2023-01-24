@@ -1,7 +1,7 @@
 const { User } = require('../database/models');
-const { compareHash } = require('../utils/decyptMD5');
+const { compareHash } = require('../utils/decyptConfig');
 const { validateLogin } = require('./schemas/validate.input');
-const jwt = require("../utils/jwt");
+const jwt = require('../utils/jwtConfig');
 
 const login = async ({ email, password }) => {
   // Valida se o input email e senha é estruturado da forma correta.
@@ -27,7 +27,7 @@ const login = async ({ email, password }) => {
     return { type: 404, message: { message: 'email ou senha incorretos' } };
   }
 
-  const {password: _, ...userWithoutPassword } = emailValidate
+  const { password: _, ...userWithoutPassword } = emailValidate;
 
   const token = jwt.newToken(userWithoutPassword);
 

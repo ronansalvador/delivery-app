@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
-const fs = require("fs");
+const fs = require('fs');
 
-const key_secret = fs.readFileSync('jwt.evaluation.key');
+const keySecret = fs.readFileSync('jwt.evaluation.key');
 
 const newToken = (data) => {
-  token = jwt.sign({ data }, key_secret, {
+  const token = jwt.sign({ data }, keySecret, {
       expiresIn: '15d',
       algorithm: 'HS256',
   });
@@ -13,7 +13,7 @@ const newToken = (data) => {
 
 const validateToken = (token) => {
   try {
-    const validate = jwt.verify(token, key_secret);
+    const validate = jwt.verify(token, keySecret);
     return { type: null, validate };
   } catch (error) {
     return { type: 401, message: { message: 'Token deve ser válido' } };
@@ -23,4 +23,4 @@ const validateToken = (token) => {
 module.exports = {
   newToken,
   validateToken,
-}
+};
