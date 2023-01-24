@@ -1,11 +1,11 @@
 const { User } = require('../database/models');
-const { compareHash } = require('../utils/decyptConfig');
-const { validateLogin } = require('./schemas/validate.input');
+const decryptMD5 = require('../utils/decyptConfig');
+const joi = require('./schemas/validate.input');
 const jwt = require('../utils/jwtConfig');
 
 const login = async ({ email, password }) => {
   // Valida se o input email e senha é estruturado da forma correta.
-  const error = validateLogin(email, password);
+  const error = joi.validateLogin(email, password);
 
   if (error.type) {
     return error;
@@ -22,7 +22,7 @@ const login = async ({ email, password }) => {
   const hashOriginal = emailValidate.password;
 
   // Função que compara a senha do input com a original do banco de dados.
-  const decrypt = compareHash(password, hashOriginal);
+  const decrypt = decryptMD5.compareHash(password, hashOriginal);
   if (decrypt !== true) {
     return { type: 404, message: { message: 'email ou senha incorretos' } };
   }
