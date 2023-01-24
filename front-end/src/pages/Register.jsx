@@ -20,7 +20,8 @@ export default function Register() {
     setValidLogin(name.length > ELEVEN && validEmail && password.length > FIVE);
   };
 
-  const handleLogin = async () => {
+  // Faz POST no back-end para validar registro, efetua login e redireciona ou salva mensagem de erro no estado
+  const handleRegister = async () => {
     const data = { name, email, password };
     try {
       const response = await axios.post('http://localhost:3001/register', data);
@@ -80,7 +81,7 @@ export default function Register() {
           type="button"
           disabled={ !validLogin }
           data-testid="common_register__button-register"
-          onClick={ handleLogin }
+          onClick={ handleRegister }
         >
           CADASTRAR
         </button>

@@ -13,8 +13,7 @@ export default function Login() {
 
   // função que faz a validação dos inputs de email e senha e salva no estado
   const ValidateLogin = () => {
-    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-    const validEmail = emailPattern.test(email);
+    const validEmail = validateEmail(email);
     const FIVE = 5;
 
     setValidLogin(validEmail && password.length > FIVE);
