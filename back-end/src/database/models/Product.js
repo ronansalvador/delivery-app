@@ -12,11 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.DECIMAL(4, 2)
     },
-    url_image: {
+    urlImage: {
       type: DataTypes.STRING,
       defaultValue: ''
     }
-  }, {});
+  }, {
+    timestamps: false,
+    tableName: 'products',
+    underscored: true,
+  });
   // Product.associate = function(models) {
   //   Product.hasMany(models.SaleProduct, { foreignKey: 'product_id', as: 'product' });
   // };
