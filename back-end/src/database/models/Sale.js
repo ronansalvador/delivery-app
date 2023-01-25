@@ -6,27 +6,27 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false
     },
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       foreignKey: true
     },
-    seller_id: {
+    sellerId: {
       type: DataTypes.INTEGER,
       foreignKey: true
     },
-    total_price: {
+    totalPrice: {
       type: DataTypes.DECIMAL(9, 2),
       allowNull: false
     },
-    delivery_address: {
+    deliveryAddress: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    delivery_number: {
+    deliveryNumber: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    sale_date: {
+    saleDate: {
       type: DataTypes.DATE,
       allowNull: false
     },
@@ -42,7 +42,6 @@ module.exports = (sequelize, DataTypes) => {
   Sale.associate = (models) => {
     Sale.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
     Sale.belongsTo(models.User, { foreignKey: 'seller_id', as: 'seller' });
-    // Sale.hasMany(models.SaleProduct, { foreignKey: 'sale_id', as: 'sale' });
   };
   return Sale;
 };
