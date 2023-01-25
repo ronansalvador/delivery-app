@@ -27,6 +27,7 @@ export default function Checkout() {
             id="seller_name"
             data-testid="customer_checkout__select-seller"
             onChange={ (target) => setSeller(target.value) }
+            value={ seller }
           >
             <option value="fulano">fulano</option>
             <option value="cicrano">cicrano</option>
@@ -40,6 +41,7 @@ export default function Checkout() {
             id="order_address"
             data-testid="customer_checkout__input-address"
             onChange={ (target) => setAddress(target.value) }
+            value={ address }
           />
         </label>
         <label htmlFor="order_address_number">
@@ -49,6 +51,7 @@ export default function Checkout() {
             id="order_address_number"
             data-testid="customer_checkout__input-address-number"
             onChange={ (target) => setAddressNumber(target.value) }
+            value={ addressNumber }
           />
         </label>
         <button type="button" data-testid="customer_checkout__button-submit-order">
