@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import CheckoutItem from '../components/CheckoutItem';
 import Navbar from '../components/Navbar';
-import checkoutMock from '../mocks/checkoutItensMock';
+import CartContext from '../context/CartContext';
 
 export default function Checkout() {
   const [seller, setSeller] = useState('');
   const [address, setAddress] = useState('');
   const [addressNumber, setAddressNumber] = useState('');
+  const { totalCartValue, cart } = useContext(CartContext);
+
   return (
     <div>
       <h3>Finalizar pedido</h3>
       <Navbar />
-      { checkoutMock.map((item, index) => (<CheckoutItem
-        key={ index }
+      { cart.map((item, index) => (<CheckoutItem
+        key={ item.id }
+        index={ index }
         itemDetails={ item }
       />)) }
       <h3 data-testid="customer_checkout__element-order-total-price">
-        Total: vários reais
+        {`R$${totalCartValue.toFixed(2)}`}
       </h3>
       <div>
         <h3>Detalhes e Endereço de entrega</h3>

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function CheckoutItem({ itemDetails }) {
-  const { index, name, quantity, price } = itemDetails;
+export default function CheckoutItem(props) {
+  const { itemDetails: { name, quantity, price }, index } = props;
+
   return (
     <div>
       <p
@@ -23,12 +24,12 @@ export default function CheckoutItem({ itemDetails }) {
       <p
         data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
       >
-        {`R$ ${price}`}
+        {`R$ ${Number(price)}`}
       </p>
       <p
         data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
       >
-        {`R$ ${price * quantity}`}
+        {`R$ ${Number(price) * quantity}`}
       </p>
       <button
         type="button"
@@ -41,10 +42,10 @@ export default function CheckoutItem({ itemDetails }) {
 }
 
 CheckoutItem.propTypes = {
-  itemDetails: PropTypes.objectOf({
-    index: PropTypes.number,
+  itemDetails: PropTypes.shape({
     name: PropTypes.string,
-    price: PropTypes.number,
+    price: PropTypes.string,
     quantity: PropTypes.number,
   }).isRequired,
+  index: PropTypes.number.isRequired,
 };
