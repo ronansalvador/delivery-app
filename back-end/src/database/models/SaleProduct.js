@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const SaleProduct = sequelize.define('SalesProduct', {
-    sale_id: {
+    saleId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       references: {
@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    product_id: {
+    productId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       references: {
@@ -19,7 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     quantity: {
       type: DataTypes.INTEGER,
     }
-  }, {});
+  }, {
+    timestamps: false,
+    tableName: 'sales_product',
+    underscored: true,
+  });
   SaleProduct.associate = function(models) {
     SaleProduct.belongsTo(models.Sale, { foreignKey: 'sale_id', as: 'sale' });
     SaleProduct.belongsTo(models.Product, { foreignKey: 'product_id', as: 'product' });
