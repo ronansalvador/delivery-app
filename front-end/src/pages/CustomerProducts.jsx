@@ -1,17 +1,15 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
 import Navbar from '../components/Navbar';
 import CartContext from '../context/CartContext';
 import ProductCard from '../components/ProductCard';
 
 export default function CustomerProducts() {
-  const { products, totalCartValue, cart } = useContext(CartContext);
+  const { products, totalCartValue } = useContext(CartContext);
   const navigate = useNavigate();
 
   // Faz POST no back-end para adicionar compra, redireciona para tela de checkout
   const handleCheckout = async () => {
-    // await axios.post('http://localhost:3001/checkout', cart);
     navigate('/customer/checkout');
   };
 
