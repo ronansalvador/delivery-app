@@ -17,6 +17,7 @@ export default function CustomerProducts() {
     navigate('/customer/checkout');
   };
 
+  // Faz GET no back-end para receber produtos
   useEffect(() => {
     const getAllProducts = async () => {
       const headers = { headers: { authorization: user.token } };
@@ -26,7 +27,7 @@ export default function CustomerProducts() {
     };
 
     getAllProducts();
-  }, []);
+  }, [user]);
 
   return (
     <div>
