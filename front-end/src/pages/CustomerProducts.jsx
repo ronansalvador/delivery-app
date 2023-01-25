@@ -1,11 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Navbar from '../components/Navbar';
 import CartContext from '../context/CartContext';
 import ProductCard from '../components/ProductCard';
+import UserContext from '../context/UserContext';
 
 export default function CustomerProducts() {
-  const { products, totalCartValue } = useContext(CartContext);
+  const [loading, setLoading] = useState(true);
+  const { user } = useContext(UserContext);
+  const { products, setProducts, totalCartValue } = useContext(CartContext);
   const navigate = useNavigate();
 
   // Faz POST no back-end para adicionar compra, redireciona para tela de checkout
@@ -13,13 +17,28 @@ export default function CustomerProducts() {
     navigate('/customer/checkout');
   };
 
+  useEffect(() => {
+    const getAllProducts = async () => {
+      const headers = { headers: { authorization: user.token } };
+      const allProducts = await axios.get('http://localhost:3001/products', headers);
+      setProducts(allProducts.data);
+      setLoading(false);
+    };
+
+    getAllProducts();
+  }, []);
+
   return (
     <div>
       <Navbar />
-      { products.map((product) => (<ProductCard
-        key={ product.id }
-        productDetails={ product }
-      />)) }
+      { loading
+        ? <h1>Loading...</h1>
+        : (products.map((product) => (
+          <ProductCard
+            key={ product.id }
+            productDetails={ product }
+          />)))}
+
       <button
         type="button"
         data-testid="customer_products__button-cart"

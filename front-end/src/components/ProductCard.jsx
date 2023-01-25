@@ -40,7 +40,7 @@ export default function ProductCard({ productDetails }) {
       <p
         data-testid={ `customer_products__element-card-price-${id}` }
       >
-        {(price.toFixed(2).toString()).replace('.', ',')}
+        {(Number(price).toFixed(2).toString()).replace('.', ',')}
       </p>
       <img
         data-testid={ `customer_products__img-card-bg-image-${id}` }
@@ -78,7 +78,7 @@ ProductCard.propTypes = {
   productDetails: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
-    price: PropTypes.number,
+    price: PropTypes.string,
     urlImage: PropTypes.string,
   }).isRequired,
 };
