@@ -22,11 +22,13 @@ export default function ProductCard({ productDetails }) {
     setCart([...newCart, { ...productDetails, quantity }]);
   };
 
+  // Diminui em 1 a quantidade do produto no estado mantendo o calor mínimo de 0
   const removeProducts = () => {
     if (quantity <= 1) return setQuantity(0);
     setQuantity((prevState) => (prevState - 1));
   };
 
+  // Aumenta em 1 a quantidade do produto no estado
   const addProducts = () => (setQuantity((prevState) => (prevState + 1)));
 
   useEffect(() => {
