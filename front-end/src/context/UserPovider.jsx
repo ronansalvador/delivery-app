@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import UserContext from './UserContext';
 
 function UserProvider({ children }) {
-  const [user, setUser] = useState('light');
+  const [user, setUser] = useState({});
 
   const contextValue = React.useMemo(() => ({
     user, setUser,
