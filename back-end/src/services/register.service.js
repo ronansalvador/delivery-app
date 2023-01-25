@@ -7,7 +7,7 @@ const register = async ({ name, email, password, role }) => {
   const loginValidate = await User.findOne({ where: { email, name }, raw: true });
 
   if (loginValidate) {
-    return { type: 404, message: { message: 'usuário já existe' } };
+    return { type: 409, message: { message: 'usuário já existe' } };
   }
 
   // Encripta a senha do usuário.

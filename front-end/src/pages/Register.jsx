@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import UserContext from '../context/UserContext';
 import validateEmail from '../helpers/validateEmail';
 import saveLocalStorage from '../helpers/saveLocalStorage';
