@@ -29,9 +29,9 @@ export default function Register() {
     try {
       const response = await axios.post('http://localhost:3001/register', data);
       if ('message' in response) return setLoginWarning(response.data);
-      setUser(response.data);
-      // Após cadastro o usuário faz login automático e é redirecionado
       saveLocalStorage('user', response.data);
+      setUser(JSON.parse(localStorage.getItem('user')));
+      // Após cadastro o usuário faz login automático e é redirecionado
       navigate('/customer/products');
     } catch (error) {
       console.error('Error:', error.message);

@@ -8,11 +8,12 @@ export default function Navbar() {
   const { role, name } = user;
   const navigate = useNavigate();
 
-  const HandleLogout = () => {
+  const handleLogout = () => {
     localStorage.removeItem('user');
-    setUser({});
+    setUser(null);
     navigate('/');
   };
+
   return (
     <nav>
       {role === 'customer' && <NavCustomerProducts />}
@@ -22,7 +23,7 @@ export default function Navbar() {
       <button
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
-        onClick={ HandleLogout }
+        onClick={ handleLogout }
       >
         Sair
       </button>
