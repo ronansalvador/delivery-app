@@ -10,7 +10,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
-    setUser({});
+    setUser(null);
     navigate('/');
   };
 

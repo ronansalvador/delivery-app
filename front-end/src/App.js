@@ -12,16 +12,19 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={ <Navigate to="/login" /> } />
-        <Route exact path="/login" element={ <Login /> } />
         {/* Caso não exista um usuário salvo no localstorage automáticamente o usuário será redirecionado para tela de login */}
         { user === null
           ? (
-            <Route path="*" element={ <Navigate to="/login" /> } />)
+            <>
+              <Route exact path="/" element={ <Navigate to="/login" /> } />
+              <Route exact path="/login" element={ <Login /> } />
+              <Route exact path="/register" element={ <Register /> } />
+              <Route path="*" element={ <Navigate to="/login" /> } />
+            </>)
           : (
             <>
-              <Route exact path="/register" element={ <Register /> } />
-              <Route exat path="/customer/products" element={ <CustomerProducts /> } />
+              <Route exact path="*" element={ <Navigate to="/customer/products" /> } />
+              <Route exact path="/customer/products" element={ <CustomerProducts /> } />
             </>
           )}
 
