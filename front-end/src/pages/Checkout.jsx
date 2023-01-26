@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import CheckoutItem from '../components/CheckoutItem';
 import Navbar from '../components/Navbar';
@@ -6,12 +6,32 @@ import CartContext from '../context/CartContext';
 import UserContext from '../context/UserContext';
 
 export default function Checkout() {
+  const [sellers, setSellers] = useState([]);
   const [sellerId, setSellerId] = useState('2');
   const [deliveryNumber, setDeliveryNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const { totalCartValue, cart } = useContext(CartContext);
   const { user } = useContext(UserContext);
   // const navigate = useNavigate();
+
+  useEffect(() => {
+    const getSellers = async () => {
+      try {
+        // const headers = { headers: { authorization: user.token } };
+        // const allSellers = await axios.get('http://localhost:3001/sellers', headers);
+        const allSellers = [
+          { id: 3, name: 'Fulana Pereira' },
+          { id: 4, name: 'Fulana Pereira 2' }];
+        setSellers(allSellers);
+        setSellerId(allSellers[0].id);
+      } catch (error) {
+        const unauthorizedCode = 401;
+        if (error.response.status === unauthorizedCode) return handleLogout();
+      }
+    };
+
+    getSellers();
+  }, []);
 
   const handleCheckout = async () => {
     try {
@@ -58,10 +78,12 @@ export default function Checkout() {
             name="sellers"
             id="seller_name"
             data-testid="customer_checkout__select-seller"
-            onChange={ (target) => setSellerId(target.value) }
+            onChange={ ({ target }) => setSellerId(Number(target.value)) }
             value={ sellerId }
           >
-            <option defaultValue value="2">Fulana Pereira</option>
+            {sellers.length > 0 && sellers.map((seller) => (
+              <option key={ seller.id } value={ seller.id }>{seller.name}</option>
+            ))}
           </select>
         </label>
         <label htmlFor="order_address">
@@ -88,7 +110,7 @@ export default function Checkout() {
           type="button"
           data-testid="customer_checkout__button-submit-order"
           onClick={ handleCheckout }
-          disabled={ deliveryAddress === '' || deliveryNumber === '' }
+          // disabled={ deliveryAddress === '' || deliveryNumber === '' }
         >
           FINALIZAR PEDIDO
         </button>
