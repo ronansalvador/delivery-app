@@ -9,7 +9,7 @@ export default function CheckoutItem(props) {
       <p
         data-testid={ `customer_checkout__element-order-table-item-number-${index}` }
       >
-        {index}
+        {index + 1}
       </p>
       <p
         data-testid={ `customer_checkout__element-order-table-name-${index}` }
@@ -21,15 +21,21 @@ export default function CheckoutItem(props) {
       >
         {quantity}
       </p>
-      <p
-        data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
-      >
-        {`R$ ${Number(price)}`}
+      <p>
+        {'R$ '}
+        <span
+          data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
+        >
+          {Number(price).toFixed(2).replace('.', ',')}
+        </span>
       </p>
-      <p
-        data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
-      >
-        {`R$ ${Number(price) * quantity}`}
+      <p>
+        {'R$ '}
+        <span
+          data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
+        >
+          {(Number(price) * quantity).toFixed(2).replace('.', ',')}
+        </span>
       </p>
       <button
         type="button"

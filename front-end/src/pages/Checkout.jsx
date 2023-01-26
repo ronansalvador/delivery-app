@@ -18,8 +18,13 @@ export default function Checkout() {
         index={ index }
         itemDetails={ item }
       />)) }
-      <h3 data-testid="customer_checkout__element-order-total-price">
-        {`R$${totalCartValue.toFixed(2)}`}
+      <h3>
+        {'R$ '}
+        <span
+          data-testid="customer_checkout__element-order-total-price"
+        >
+          {totalCartValue.toFixed(2).replace('.', ',')}
+        </span>
       </h3>
       <div>
         <h3>Detalhes e Endereço de entrega</h3>
