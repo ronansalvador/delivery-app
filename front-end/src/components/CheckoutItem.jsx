@@ -60,7 +60,7 @@ CheckoutItem.propTypes = {
   itemDetails: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
-    price: PropTypes.string,
+    price: PropTypes.number,
     quantity: PropTypes.number,
   }).isRequired,
   index: PropTypes.number.isRequired,

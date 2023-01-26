@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CheckoutItem from '../components/CheckoutItem';
 import Navbar from '../components/Navbar';
 import CartContext from '../context/CartContext';
@@ -8,6 +9,11 @@ export default function Checkout() {
   const [address, setAddress] = useState('');
   const [addressNumber, setAddressNumber] = useState('');
   const { totalCartValue, cart } = useContext(CartContext);
+  // const navigate = useNavigate();
+
+  const handleCheckout = async () => {
+    // const data = { cart: { ...cart }, addressNumber, address, seller, totalCartValue };
+  };
 
   return (
     <div>
@@ -62,7 +68,11 @@ export default function Checkout() {
             value={ addressNumber }
           />
         </label>
-        <button type="button" data-testid="customer_checkout__button-submit-order">
+        <button
+          type="button"
+          data-testid="customer_checkout__button-submit-order"
+          onClick={ handleCheckout }
+        >
           FINALIZAR PEDIDO
         </button>
       </div>
