@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import CustomerOrders from './pages/CustomerOrders';
 import './styles';
+import CustomerOrdersDetails from './pages/CustomerOrdersDetails';
 
 function App() {
   const { user } = useContext(UserContext);
@@ -28,7 +29,12 @@ function App() {
               <Route exact path="*" element={ <Navigate to="/customer/products" /> } />
               <Route exact path="/customer/products" element={ <CustomerProducts /> } />
               <Route exact path="/customer/checkout" element={ <Checkout /> } />
-              <Route exact path="/customer/orders" element={ <CustomerOrders /> } />
+              {/* <Route exact path="/customer/orders" element={ <CustomerOrders /> } /> */}
+              <Route
+                exact
+                path="/customer/orders"
+                element={ <CustomerOrdersDetails /> }
+              />
             </>
           )}
       </Routes>

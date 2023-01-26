@@ -43,7 +43,7 @@ export default function CustomerProducts() {
       <button
         type="button"
         data-testid="customer_products__button-cart"
-        className="cart-btn"
+        data-testid="cart-btn"
         disabled={ !totalCartValue }
         onClick={ handleCheckout }
       >

@@ -13,6 +13,7 @@ export default function Checkout() {
       <Navbar />
       { checkoutMock.map((item, index) => (<CheckoutItem
         key={ index }
+        removeButton
         itemDetails={ item }
       />)) }
       <h3 data-testid="customer_checkout__element-order-total-price">
