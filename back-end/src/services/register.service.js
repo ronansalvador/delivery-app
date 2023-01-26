@@ -18,12 +18,13 @@ const register = async ({ name, email, password, role }) => {
   
   // Remove a senha do usuário, para gerar o token.
   const { password: _, ...userWithoutPassword } = newUser.dataValues;
-
+  
   // Função que gera o token.
   const token = jwt.newToken(userWithoutPassword);
 
   // Retorna as informações informações do usuario, caso o login seja feito com sucesso.
-  return { type: 201, message: { name, email, role, token } };
+  const { id } = newUser.dataValues; 
+  return { type: 201, message: { id, name, email, role, token } };
 };
 
 module.exports = { register };
