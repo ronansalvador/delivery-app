@@ -5,6 +5,7 @@ import CustomerProducts from './pages/CustomerProducts';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
+import CustomerDetails from './pages/CustomerDetails';
 import './styles';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
               <Route exact path="*" element={ <Navigate to="/customer/products" /> } />
               <Route exact path="/customer/products" element={ <CustomerProducts /> } />
               <Route exact path="/customer/checkout" element={ <Checkout /> } />
+              <Route exact path="/customer/orders/:id" element={ <CustomerDetails /> } />
             </>
           )}
       </Routes>

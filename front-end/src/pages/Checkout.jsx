@@ -3,16 +3,34 @@ import React, { useState, useContext } from 'react';
 import CheckoutItem from '../components/CheckoutItem';
 import Navbar from '../components/Navbar';
 import CartContext from '../context/CartContext';
+// import UserContext from '../context/UserContext';
 
 export default function Checkout() {
-  const [seller, setSeller] = useState('');
-  const [address, setAddress] = useState('');
-  const [addressNumber, setAddressNumber] = useState('');
+  const [sellerId, setSellerId] = useState('2');
+  const [deliveryNumber, setDeliveryNumber] = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
   const { totalCartValue, cart } = useContext(CartContext);
+  // const { user } = useContext(UserContext);
   // const navigate = useNavigate();
 
   const handleCheckout = async () => {
-    // const data = { cart: { ...cart }, addressNumber, address, seller, totalCartValue };
+    try {
+      // const headers = { headers: { authorization: user.token } };
+      const data = {
+        cart: { ...cart },
+        userID: 'PENDENTE',
+        sellerId,
+        totalPrice: totalCartValue,
+        deliveryAddress,
+        deliveryNumber,
+      };
+      // const saleId = await axios.post('http://localhost:3001/checkout', data, headers);
+      console.log(data);
+      // navigate(`localhost:3000/customer/orders/${saleId}`);
+    } catch (error) {
+      const unauthorizedCode = 401;
+      if (error.response.status === unauthorizedCode) return handleLogout();
+    }
   };
 
   return (
@@ -40,12 +58,10 @@ export default function Checkout() {
             name="sellers"
             id="seller_name"
             data-testid="customer_checkout__select-seller"
-            onChange={ (target) => setSeller(target.value) }
-            value={ seller }
+            onChange={ (target) => setSellerId(target.value) }
+            value={ sellerId }
           >
-            <option value="fulano">fulano</option>
-            <option value="cicrano">cicrano</option>
-            <option value="beltrano">beltrano</option>
+            <option defaultValue value="2">Fulana Pereira</option>
           </select>
         </label>
         <label htmlFor="order_address">
@@ -54,8 +70,8 @@ export default function Checkout() {
             type="text"
             id="order_address"
             data-testid="customer_checkout__input-address"
-            onChange={ (target) => setAddress(target.value) }
-            value={ address }
+            onChange={ ({ target }) => setDeliveryAddress(target.value) }
+            value={ deliveryAddress }
           />
         </label>
         <label htmlFor="order_address_number">
@@ -64,14 +80,15 @@ export default function Checkout() {
             type="number"
             id="order_address_number"
             data-testid="customer_checkout__input-address-number"
-            onChange={ (target) => setAddressNumber(target.value) }
-            value={ addressNumber }
+            onChange={ ({ target }) => setDeliveryNumber(target.value) }
+            value={ deliveryNumber }
           />
         </label>
         <button
           type="button"
           data-testid="customer_checkout__button-submit-order"
           onClick={ handleCheckout }
+          disabled={ deliveryAddress === '' || deliveryNumber === '' }
         >
           FINALIZAR PEDIDO
         </button>
