@@ -3,14 +3,14 @@ import React, { useState, useContext } from 'react';
 import CheckoutItem from '../components/CheckoutItem';
 import Navbar from '../components/Navbar';
 import CartContext from '../context/CartContext';
-// import UserContext from '../context/UserContext';
+import UserContext from '../context/UserContext';
 
 export default function Checkout() {
   const [sellerId, setSellerId] = useState('2');
   const [deliveryNumber, setDeliveryNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const { totalCartValue, cart } = useContext(CartContext);
-  // const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   // const navigate = useNavigate();
 
   const handleCheckout = async () => {
@@ -18,7 +18,7 @@ export default function Checkout() {
       // const headers = { headers: { authorization: user.token } };
       const data = {
         cart: { ...cart },
-        userID: 'PENDENTE',
+        userID: user.id,
         sellerId,
         totalPrice: totalCartValue,
         deliveryAddress,
