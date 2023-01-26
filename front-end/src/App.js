@@ -5,7 +5,7 @@ import CustomerProducts from './pages/CustomerProducts';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
-import CustomerOrders from './pages/CustomerOrders';
+// import CustomerDetails from './pages/CustomerDetails';
 import './styles';
 import CustomerOrdersDetails from './pages/CustomerOrdersDetails';
 

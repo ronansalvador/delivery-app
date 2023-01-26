@@ -1,5 +1,7 @@
 import React from 'react';
+import CheckoutItem from '../components/CheckoutItem';
 import Navbar from '../components/Navbar';
+import checkoutItensMock from '../mocks/checkoutItensMock';
 
 export default function CustomerOrdersDetails() {
   return (
@@ -29,6 +31,18 @@ export default function CustomerOrdersDetails() {
       >
         Marcar Como Entregue
       </button>
+      {checkoutItensMock.map((item, index) => (
+        <CheckoutItem
+          key={ item.id }
+          index={ index }
+          itemDetails={ item }
+          pageTestId="order_details"
+        />
+      ))}
+      <p>
+        {'Total: R$ '}
+        <span data-testid="customer_order_details__element-order-total-price">0,00</span>
+      </p>
     </div>
   );
 }
