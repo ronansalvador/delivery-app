@@ -34,8 +34,8 @@ const login = async ({ email, password }) => {
   const token = jwt.newToken(userWithoutPassword);
 
   // Retorna as informações informações do usuario, caso o login seja feito com sucesso.
-  const { name, role } = emailValidate;
-  return { type: 200, message: { name, email, role, token } };
+  const { id, name, role } = emailValidate;
+  return { type: 200, message: { id, name, email, role, token } };
 };
 
 module.exports = { login };
