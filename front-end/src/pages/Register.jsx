@@ -34,8 +34,7 @@ export default function Register() {
       // Após cadastro o usuário faz login automático e é redirecionado
       navigate('/customer/products');
     } catch (error) {
-      console.error('Error:', error.message);
-      setLoginWarning({ message: error.message });
+      setLoginWarning(error.response.data);
     }
   };
 

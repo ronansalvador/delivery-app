@@ -8,7 +8,7 @@ import UserContext from '../context/UserContext';
 
 export default function CustomerProducts() {
   const [loading, setLoading] = useState(true);
-  const { user } = useContext(UserContext);
+  const { user, handleLogout } = useContext(UserContext);
   const { products, setProducts, totalCartValue } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -20,10 +20,15 @@ export default function CustomerProducts() {
   // Faz GET no back-end para receber produtos
   useEffect(() => {
     const getAllProducts = async () => {
-      const headers = { headers: { authorization: user.token } };
-      const allProducts = await axios.get('http://localhost:3001/products', headers);
-      setProducts(allProducts.data);
-      setLoading(false);
+      try {
+        const headers = { headers: { authorization: user.token } };
+        const allProducts = await axios.get('http://localhost:3001/products', headers);
+        setProducts(allProducts.data);
+        setLoading(false);
+      } catch (error) {
+        const unauthorizedCode = 401;
+        if (error.response.status === unauthorizedCode) return handleLogout();
+      }
     };
 
     getAllProducts();

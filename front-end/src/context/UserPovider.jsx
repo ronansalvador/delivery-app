@@ -7,8 +7,14 @@ function UserProvider({ children }) {
   const savedUser = JSON.parse(localStorage.getItem('user'));
   const [user, setUser] = useState(savedUser);
 
+  // Limpa o estado, localstorage e redireciona o usuário para tela de login
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+  };
+
   const contextValue = React.useMemo(() => ({
-    user, setUser,
+    user, setUser, handleLogout,
   }), [user]);
 
   return (
