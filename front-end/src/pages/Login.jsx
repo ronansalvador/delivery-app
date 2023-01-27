@@ -96,7 +96,7 @@ export default function Login() {
       </button>
 
       <p
-        data-testid={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
+        className={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
         data-testid="common_login__element-invalid-email"
       >
         {loginWarning.message}

@@ -35,7 +35,7 @@ function UserProvider({ children }) {
 
   const contextValue = React.useMemo(() => ({
     user, sales, setUser, handleLogout, setSales,
-  }), [user]);
+  }), [user, sales]);
 
   return (
     <UserContext.Provider

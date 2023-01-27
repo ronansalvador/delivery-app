@@ -30,7 +30,8 @@ export default function Checkout() {
       const response = await axios.post('http://localhost:3001/checkout', data, headers);
       const userSales = sales;
       setSales([...userSales, response.data]);
-      navigate(`/customer/orders/${response.data.id}`);
+      const saleId = response.data.id;
+      navigate(`/customer/orders/${saleId}`, { state: { saleId } });
     } catch (error) {
       const unauthorizedCode = 401;
       if (error.response.status === unauthorizedCode) return handleLogout();
@@ -116,7 +117,7 @@ export default function Checkout() {
           type="button"
           data-testid="customer_checkout__button-submit-order"
           onClick={ handleCheckout }
-          disabled={ deliveryAddress === '' || deliveryNumber === '' }
+          disabled={ deliveryAddress === '' || deliveryNumber === '' || !cart.length }
         >
           FINALIZAR PEDIDO
         </button>
