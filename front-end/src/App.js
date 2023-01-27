@@ -25,7 +25,12 @@ function App() {
             </>)
           : (
             <>
-              <Route exact path="*" element={ <Navigate to="/customer/products" /> } />
+              <Route exact path="/" element={ <Navigate to="/customer/products" /> } />
+              <Route
+                exact
+                path="/login"
+                element={ <Navigate to="/customer/products" /> }
+              />
               <Route exact path="/customer/products" element={ <CustomerProducts /> } />
               <Route exact path="/customer/checkout" element={ <Checkout /> } />
               <Route exact path="/customer/orders/:id" element={ <CustomerDetails /> } />

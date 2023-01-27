@@ -1,5 +1,6 @@
+import axios from 'axios';
 import React, { useState, useContext, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CheckoutItem from '../components/CheckoutItem';
 import Navbar from '../components/Navbar';
 import CartContext from '../context/CartContext';
@@ -12,7 +13,7 @@ export default function Checkout() {
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const { totalCartValue, cart } = useContext(CartContext);
   const { user } = useContext(UserContext);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getSellers = async () => {
@@ -20,8 +21,8 @@ export default function Checkout() {
         // const headers = { headers: { authorization: user.token } };
         // const allSellers = await axios.get('http://localhost:3001/sellers', headers);
         const allSellers = [
-          { id: 3, name: 'Fulana Pereira' },
-          { id: 4, name: 'Fulana Pereira 2' }];
+          { id: 2, name: 'Fulana Pereira' },
+        ];
         setSellers(allSellers);
         setSellerId(allSellers[0].id);
       } catch (error) {
@@ -35,23 +36,40 @@ export default function Checkout() {
 
   const handleCheckout = async () => {
     try {
-      // const headers = { headers: { authorization: user.token } };
+      const headers = { headers: { authorization: user.token } };
       const data = {
-        cart: { ...cart },
-        userID: user.id,
+        cart,
+        userId: user.id,
         sellerId,
         totalPrice: totalCartValue,
         deliveryAddress,
         deliveryNumber,
       };
-      // const saleId = await axios.post('http://localhost:3001/checkout', data, headers);
-      console.log(data);
-      // navigate(`localhost:3000/customer/orders/${saleId}`);
+      const response = await axios.post('http://localhost:3001/checkout', data, headers);
+      navigate(`/customer/orders/${response.data.id}`);
     } catch (error) {
       const unauthorizedCode = 401;
       if (error.response.status === unauthorizedCode) return handleLogout();
     }
   };
+
+  useEffect(() => {
+    const debug = async () => {
+      const headers = { headers: { authorization: user.token } };
+      const data = {
+        cart,
+        userId: user.id,
+        sellerId,
+        totalPrice: totalCartValue,
+        deliveryAddress,
+        deliveryNumber,
+      };
+      const response = await axios.post('http://localhost:3001/checkout', data, headers);
+      console.log(response);
+    };
+
+    debug();
+  }, []);
 
   return (
     <div>
