@@ -5,8 +5,9 @@ import CustomerProducts from './pages/CustomerProducts';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
-import CustomerDetails from './pages/CustomerDetails';
+import CustomerOrders from './pages/CustomerOrders';
 import './styles';
+import CustomerOrdersDetails from './pages/CustomerOrdersDetails';
 
 function App() {
   const { user } = useContext(UserContext);
@@ -33,7 +34,13 @@ function App() {
               />
               <Route exact path="/customer/products" element={ <CustomerProducts /> } />
               <Route exact path="/customer/checkout" element={ <Checkout /> } />
-              <Route exact path="/customer/orders/:id" element={ <CustomerDetails /> } />
+              <Route exact path="/customer/orders" element={ <CustomerOrders /> } />
+              <Route
+                exact
+                path="/customer/orders/:id"
+                id=":id"
+                element={ <CustomerOrdersDetails /> }
+              />
             </>
           )}
       </Routes>

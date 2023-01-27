@@ -30,7 +30,8 @@ export default function Checkout() {
       const response = await axios.post('http://localhost:3001/checkout', data, headers);
       const userSales = sales;
       setSales([...userSales, response.data]);
-      navigate(`/customer/orders/${response.data.id}`);
+      const saleId = response.data.id;
+      navigate(`/customer/orders/${saleId}`, { state: { saleId } });
     } catch (error) {
       const unauthorizedCode = 401;
       if (error.response.status === unauthorizedCode) return handleLogout();
@@ -63,6 +64,7 @@ export default function Checkout() {
         key={ item.id }
         index={ index }
         itemDetails={ item }
+        pageTestId="checkout"
       />)) }
       <h3>
         {'R$ '}
