@@ -12,6 +12,7 @@ function UserProvider({ children }) {
   // Limpa o estado, localstorage e redireciona o usuário para tela de login
   const handleLogout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('cart');
     setUser(null);
   };
 

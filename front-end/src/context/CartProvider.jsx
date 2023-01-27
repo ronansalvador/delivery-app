@@ -25,6 +25,16 @@ function CartProvider({ children }) {
     updateTotalValue();
   }, [cart]);
 
+  useEffect(() => {
+    const loadCartFromLocalstorage = () => {
+      const loadCart = localStorage.getItem('cart');
+      const loadedCart = loadCart === null ? [] : JSON.parse(loadCart);
+      setCart(loadedCart);
+    };
+
+    loadCartFromLocalstorage();
+  }, []);
+
   return (
     <CartContext.Provider
       value={ contextValue }

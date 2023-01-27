@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import CartContext from '../context/CartContext';
+import saveLocalStorage from '../helpers/saveLocalStorage';
 
 export default function CheckoutItem(props) {
   const { itemDetails: { id, name, quantity, price }, index } = props;
@@ -10,6 +11,7 @@ export default function CheckoutItem(props) {
     const oldCart = cart;
     const newCart = oldCart.filter((product) => product.id !== id);
     setCart(newCart);
+    saveLocalStorage('cart', newCart);
   };
 
   return (

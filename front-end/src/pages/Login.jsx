@@ -7,10 +7,10 @@ import saveLocalStorage from '../helpers/saveLocalStorage';
 
 export default function Login() {
   const { setUser } = useContext(UserContext);
-  // const [email, setEmail] = useState('zebirita@email.com'); // DEBUG
-  // const [password, setPassword] = useState('$#zebirita#$'); // DEBUG
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('zebirita@email.com'); // DEBUG
+  const [password, setPassword] = useState('$#zebirita#$'); // DEBUG
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
   const [validLogin, setValidLogin] = useState(false);
   const [loginWarning, setLoginWarning] = useState({});
   const navigate = useNavigate();
