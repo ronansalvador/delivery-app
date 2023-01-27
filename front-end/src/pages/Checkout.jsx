@@ -7,12 +7,12 @@ import CartContext from '../context/CartContext';
 import UserContext from '../context/UserContext';
 
 export default function Checkout() {
-  const [sellers, setSellers] = useState([]);
-  const [sellerId, setSellerId] = useState('2');
+  const [loading, setLoading] = useState(true);
+  const [seller, setSeller] = useState({});
   const [deliveryNumber, setDeliveryNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const { totalCartValue, cart } = useContext(CartContext);
-  const { user, sales, setSales } = useContext(UserContext);
+  const { user, sales, setSales, sellers } = useContext(UserContext);
   const navigate = useNavigate();
 
   // Faz POST no back-end para salvar a sale, salva sale atual no estado e redireciona para tela de detalhes
@@ -22,7 +22,7 @@ export default function Checkout() {
       const data = {
         cart,
         userId: user.id,
-        sellerId,
+        sellerId: seller.id,
         totalPrice: totalCartValue,
         deliveryAddress,
         deliveryNumber,
@@ -30,33 +30,24 @@ export default function Checkout() {
       const response = await axios.post('http://localhost:3001/checkout', data, headers);
       const userSales = sales;
       setSales([...userSales, response.data]);
-      navigate(`/customer/orders/${response.data.id}`);
+      const saleId = response.data.id;
+      navigate(`/customer/orders/${saleId}`, { state: { saleId, seller } });
     } catch (error) {
       const unauthorizedCode = 401;
       if (error.response.status === unauthorizedCode) return handleLogout();
     }
   };
 
-  // Faz GET no back-end para receber lista de pessoas vendedoras, salva no estado e faz map no select
-  // WORK IN PROGRESS
+  // Seta como id padrão de vendedor a primeira opção do estado
   useEffect(() => {
-    const getSellers = async () => {
-      try {
-        // const headers = { headers: { authorization: user.token } };
-        // const allSellers = await axios.get('http://localhost:3001/sellers', headers);
-        const allSellers = [
-          { id: 2, name: 'Fulana Pereira' },
-        ];
-        setSellers(allSellers);
-        setSellerId(allSellers[0].id);
-      } catch (error) {
-        const unauthorizedCode = 401;
-        if (error.response.status === unauthorizedCode) return handleLogout();
-      }
+    const setDefaultSeller = () => {
+      if (!sellers.length) return;
+      setSeller(sellers[0]);
+      setLoading(false);
     };
 
-    getSellers();
-  }, []);
+    setDefaultSeller();
+  }, [sellers]);
 
   return (
     <div>
@@ -66,6 +57,7 @@ export default function Checkout() {
         key={ item.id }
         index={ index }
         itemDetails={ item }
+        pageTestId="checkout"
       />)) }
       <h3>
         {'R$ '}
@@ -75,51 +67,61 @@ export default function Checkout() {
           {totalCartValue.toFixed(2).replace('.', ',')}
         </span>
       </h3>
-      <div>
-        <h3>Detalhes e Endereço de entrega</h3>
-        <label htmlFor="seller_name">
-          P. Vendedora Responsável:
-          <select
-            name="sellers"
-            id="seller_name"
-            data-testid="customer_checkout__select-seller"
-            onChange={ ({ target }) => setSellerId(Number(target.value)) }
-            value={ sellerId }
-          >
-            {sellers.length > 0 && sellers.map((seller) => (
-              <option key={ seller.id } value={ seller.id }>{seller.name}</option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="order_address">
-          Endereço
-          <input
-            type="text"
-            id="order_address"
-            data-testid="customer_checkout__input-address"
-            onChange={ ({ target }) => setDeliveryAddress(target.value) }
-            value={ deliveryAddress }
-          />
-        </label>
-        <label htmlFor="order_address_number">
-          Número
-          <input
-            type="number"
-            id="order_address_number"
-            data-testid="customer_checkout__input-address-number"
-            onChange={ ({ target }) => setDeliveryNumber(target.value) }
-            value={ deliveryNumber }
-          />
-        </label>
-        <button
-          type="button"
-          data-testid="customer_checkout__button-submit-order"
-          onClick={ handleCheckout }
-          disabled={ deliveryAddress === '' || deliveryNumber === '' }
-        >
-          FINALIZAR PEDIDO
-        </button>
-      </div>
+      {loading
+        ? <h1>Loading...</h1>
+        : (
+          <form>
+            <h3>Detalhes e Endereço de entrega</h3>
+            <label htmlFor="seller_name">
+              P. Vendedora Responsável:
+              <select
+                name="sellers"
+                id="seller_name"
+                data-testid="customer_checkout__select-seller"
+                onChange={ ({ target }) => setSeller(Number(target.value)) }
+                value={ seller }
+              >
+                {sellers.length > 0 && sellers.map((currSeller) => (
+                  <option
+                    key={ currSeller.id }
+                    value={ currSeller.id }
+                  >
+                    {currSeller.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label htmlFor="order_address">
+              Endereço
+              <input
+                type="text"
+                id="order_address"
+                min="0"
+                data-testid="customer_checkout__input-address"
+                onChange={ ({ target }) => setDeliveryAddress(target.value) }
+                value={ deliveryAddress }
+              />
+            </label>
+            <label htmlFor="order_address_number">
+              Número
+              <input
+                type="number"
+                id="order_address_number"
+                data-testid="customer_checkout__input-address-number"
+                onChange={ ({ target }) => setDeliveryNumber(target.value) }
+                value={ deliveryNumber }
+              />
+            </label>
+            <button
+              type="button"
+              data-testid="customer_checkout__button-submit-order"
+              onClick={ handleCheckout }
+              disabled={ deliveryAddress === '' || deliveryNumber === '' || !cart.length }
+            >
+              FINALIZAR PEDIDO
+            </button>
+          </form>
+        )}
     </div>
   );
 }

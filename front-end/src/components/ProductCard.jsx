@@ -8,13 +8,25 @@ export default function ProductCard({ productDetails }) {
   const [quantity, setQuantity] = useState(0);
   const { name, price, urlImage, id } = productDetails;
 
-  // Atualiza produtos no carrinho e salva no localstorage
-  const handleCart = () => {
-    const oldCart = cart;
-    const filteredCar = oldCart.filter((product) => product.id !== id);
+  // Remove item do carrinho e local storage
+  const removeItemFromCart = (filteredCar) => {
+    setCart(filteredCar);
+    saveLocalStorage('cart', filteredCar);
+  };
+
+  // Atualiza carrinho e local storage
+  const updateCart = (filteredCar) => {
     const newCart = [...filteredCar, { ...productDetails, quantity }];
     setCart(newCart);
     saveLocalStorage('cart', newCart);
+  };
+
+  // Gerencia atualizações do carrinho e localstorage
+  const handleCart = () => {
+    const oldCart = cart;
+    const filteredCar = oldCart.filter((product) => product.id !== id);
+    if (!quantity) return removeItemFromCart(filteredCar);
+    updateCart(filteredCar);
   };
 
   // Diminui em 1 a quantidade do produto no estado mantendo o calor mínimo de 0
