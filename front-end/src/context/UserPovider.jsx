@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-// import axios from 'axios';
+import axios from 'axios';
 import UserContext from './UserContext';
 
 function UserProvider({ children }) {
@@ -22,9 +22,9 @@ function UserProvider({ children }) {
     const getSales = async () => {
       if (user === null) return;
       try {
-        // const headers = { headers: { authorization: user.token } };
-        // const response = await axios.get(`http://localhost:3001/sales/${user.id}`, headers);
-        // setSales(response.data);
+        const headers = { headers: { authorization: user.token } };
+        const response = await axios.get(`http://localhost:3001/sales/${user.id}`, headers);
+        setSales(response.data);
       } catch (error) {
         const unauthorizedCode = 401;
         if (error.response.status === unauthorizedCode) return handleLogout();
@@ -36,7 +36,7 @@ function UserProvider({ children }) {
 
   const contextValue = React.useMemo(() => ({
     user, sales, setUser, handleLogout, setSales,
-  }), [user]);
+  }), [user, sales]);
 
   return (
     <UserContext.Provider
