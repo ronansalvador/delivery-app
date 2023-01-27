@@ -16,13 +16,14 @@ export default function Checkout() {
   const navigate = useNavigate();
 
   // Faz POST no back-end para salvar a sale, salva sale atual no estado e redireciona para tela de detalhes
+
   const handleCheckout = async () => {
     try {
       const headers = { headers: { authorization: user.token } };
       const data = {
         cart,
         userId: user.id,
-        sellerId: seller.id,
+        sellerId: 2, // Não está dinimico;
         totalPrice: totalCartValue,
         deliveryAddress,
         deliveryNumber,
