@@ -12,10 +12,10 @@ export default function Checkout() {
   const [deliveryNumber, setDeliveryNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const { totalCartValue, cart } = useContext(CartContext);
-  const { user } = useContext(UserContext);
+  const { user, sales, setSales } = useContext(UserContext);
   const navigate = useNavigate();
 
-  // Faz POST no back-end para salvar a sale, redireciona para tela de detalhes
+  // Faz POST no back-end para salvar a sale, salva sale atual no estado e redireciona para tela de detalhes
   const handleCheckout = async () => {
     try {
       const headers = { headers: { authorization: user.token } };
@@ -28,6 +28,8 @@ export default function Checkout() {
         deliveryNumber,
       };
       const response = await axios.post('http://localhost:3001/checkout', data, headers);
+      const userSales = sales;
+      setSales([...userSales, response.data]);
       navigate(`/customer/orders/${response.data.id}`);
     } catch (error) {
       const unauthorizedCode = 401;
@@ -113,7 +115,7 @@ export default function Checkout() {
           type="button"
           data-testid="customer_checkout__button-submit-order"
           onClick={ handleCheckout }
-          // disabled={ deliveryAddress === '' || deliveryNumber === '' }
+          disabled={ deliveryAddress === '' || deliveryNumber === '' }
         >
           FINALIZAR PEDIDO
         </button>
