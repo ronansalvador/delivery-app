@@ -25,6 +25,7 @@ function CartProvider({ children }) {
     updateTotalValue();
   }, [cart]);
 
+  // Carrega carrinho do local storage caso a exista
   useEffect(() => {
     const loadCartFromLocalstorage = () => {
       const loadCart = localStorage.getItem('cart');
