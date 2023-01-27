@@ -31,7 +31,6 @@ export default function Login() {
     };
     try {
       const response = await axios.post('http://localhost:3001/login', data);
-      console.log('response', response.data);
       if ('message' in response) return setLoginWarning(response.data);
       await setUser(response.data);
       // Redireciona de acordo com a role
@@ -40,8 +39,7 @@ export default function Login() {
       if (response.data.role === 'seller') return navigate('/seller/orders');
       navigate('/admin/manage');
     } catch (error) {
-      console.error('Error:', error.message);
-      setLoginWarning({ message: error.message });
+      setLoginWarning(error.response.data);
     }
   };
 
