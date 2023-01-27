@@ -1,25 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import CartContext from '../context/CartContext';
+import saveLocalStorage from '../helpers/saveLocalStorage';
 
 export default function ProductCard({ productDetails }) {
   const { cart, setCart } = useContext(CartContext);
   const [quantity, setQuantity] = useState(0);
   const { name, price, urlImage, id } = productDetails;
 
-  // Gerencia atalização de produtos no carrinho
-  const updateCart = () => {
-    const currProduct = cart.find((product) => product.id === id);
-    // Previne função de ser executada quando página é carregada pela primeira vez
-    if (!quantity && !currProduct) return;
-    // Adiciona produto caso não exista no carrinho
-    if (!currProduct) return setCart([...cart, { ...productDetails, quantity }]);
+  // Atualiza produtos no carrinho e salva no localstorage
+  const handleCart = () => {
     const oldCart = cart;
-    const newCart = oldCart.filter((product) => product.id !== id);
-    // Remove item do carrinho quando a quantidade é 0
-    if (!quantity) return setCart(newCart);
-    // Atualiza quantidade do produto no carrinho
-    setCart([...newCart, { ...productDetails, quantity }]);
+    const filteredCar = oldCart.filter((product) => product.id !== id);
+    const newCart = [...filteredCar, { ...productDetails, quantity }];
+    setCart(newCart);
+    saveLocalStorage('cart', newCart);
   };
 
   // Diminui em 1 a quantidade do produto no estado mantendo o calor mínimo de 0
@@ -32,8 +27,18 @@ export default function ProductCard({ productDetails }) {
   const addProducts = () => (setQuantity((prevState) => (prevState + 1)));
 
   useEffect(() => {
-    updateCart();
+    handleCart();
   }, [quantity]);
+
+  // Carrega items salvos no carrinho ao atualizar a página
+  useEffect(() => {
+    const loadQuantity = () => {
+      const itemOnState = cart.find((product) => product.id === id);
+      if (itemOnState) setQuantity(itemOnState.quantity);
+    };
+
+    loadQuantity();
+  }, []);
 
   return (
     <div>
