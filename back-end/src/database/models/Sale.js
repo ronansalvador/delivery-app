@@ -28,20 +28,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     saleDate: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
     },
     status: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
   }, {
     timestamps: false,
     tableName: 'sales',
     underscored: true,
   });
   Sale.associate = (models) => {
-    Sale.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
-    Sale.belongsTo(models.User, { foreignKey: 'seller_id', as: 'seller' });
+    Sale.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
+    Sale.belongsTo(models.User, { foreignKey: 'sellerId', as: 'seller' });
   };
   return Sale;
 };
+
+// oi
