@@ -15,25 +15,7 @@ export default function Checkout() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getSellers = async () => {
-      try {
-        // const headers = { headers: { authorization: user.token } };
-        // const allSellers = await axios.get('http://localhost:3001/sellers', headers);
-        const allSellers = [
-          { id: 2, name: 'Fulana Pereira' },
-        ];
-        setSellers(allSellers);
-        setSellerId(allSellers[0].id);
-      } catch (error) {
-        const unauthorizedCode = 401;
-        if (error.response.status === unauthorizedCode) return handleLogout();
-      }
-    };
-
-    getSellers();
-  }, []);
-
+  // Faz POST no back-end para salvar a sale, redireciona para tela de detalhes
   const handleCheckout = async () => {
     try {
       const headers = { headers: { authorization: user.token } };
@@ -53,22 +35,25 @@ export default function Checkout() {
     }
   };
 
+  // Faz GET no back-end para receber lista de pessoas vendedoras, salva no estado e faz map no select
+  // WORK IN PROGRESS
   useEffect(() => {
-    const debug = async () => {
-      const headers = { headers: { authorization: user.token } };
-      const data = {
-        cart,
-        userId: user.id,
-        sellerId,
-        totalPrice: totalCartValue,
-        deliveryAddress,
-        deliveryNumber,
-      };
-      const response = await axios.post('http://localhost:3001/checkout', data, headers);
-      console.log(response);
+    const getSellers = async () => {
+      try {
+        // const headers = { headers: { authorization: user.token } };
+        // const allSellers = await axios.get('http://localhost:3001/sellers', headers);
+        const allSellers = [
+          { id: 2, name: 'Fulana Pereira' },
+        ];
+        setSellers(allSellers);
+        setSellerId(allSellers[0].id);
+      } catch (error) {
+        const unauthorizedCode = 401;
+        if (error.response.status === unauthorizedCode) return handleLogout();
+      }
     };
 
-    debug();
+    getSellers();
   }, []);
 
   return (
