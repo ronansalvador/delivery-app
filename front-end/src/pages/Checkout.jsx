@@ -42,13 +42,10 @@ export default function Checkout() {
   useEffect(() => {
     const getSellers = async () => {
       try {
-        // const headers = { headers: { authorization: user.token } };
-        // const allSellers = await axios.get('http://localhost:3001/sellers', headers);
-        const allSellers = [
-          { id: 2, name: 'Fulana Pereira' },
-        ];
-        setSellers(allSellers);
-        setSellerId(allSellers[0].id);
+        const headers = { headers: { authorization: user.token } };
+        const allSellers = await axios.get('http://localhost:3001/seller', headers);
+        setSellers(allSellers.data);
+        setSellerId(allSellers.data[0].id);
       } catch (error) {
         const unauthorizedCode = 401;
         if (error.response.status === unauthorizedCode) return handleLogout();
@@ -115,7 +112,7 @@ export default function Checkout() {
           type="button"
           data-testid="customer_checkout__button-submit-order"
           onClick={ handleCheckout }
-          disabled={ deliveryAddress === '' || deliveryNumber === '' }
+          disabled={ deliveryAddress === '' || deliveryNumber === '' || !cart.length }
         >
           FINALIZAR PEDIDO
         </button>
