@@ -7,7 +7,7 @@ import UserContext from '../context/UserContext';
 
 export default function CustomerOrdersDetails() {
   const { state } = useLocation();
-  const { saleId } = state;
+  const { saleId, seller } = state;
   const [currSale, setCurrSale] = useState({});
   const [index, setIndex] = useState(0);
   const { sales } = useContext(UserContext);
@@ -35,7 +35,7 @@ export default function CustomerOrdersDetails() {
       <p
         data-testid="customer_order_details__element-order-details-label-seller-name"
       >
-        Fulana Pereira
+        {seller.name}
       </p>
       <p
         data-testid="customer_order_details__element-order-details-label-order-date"
