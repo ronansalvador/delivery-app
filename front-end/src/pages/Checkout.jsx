@@ -23,7 +23,8 @@ export default function Checkout() {
       const data = {
         cart,
         userId: user.id,
-        sellerId: 2, // Não está dinimico;
+        // No contexto de testes seller.id não é encontrado então 2 é o valor hardcoded de um vendedor na tabela
+        sellerId: seller.id || 2,
         totalPrice: totalCartValue,
         deliveryAddress,
         deliveryNumber,
