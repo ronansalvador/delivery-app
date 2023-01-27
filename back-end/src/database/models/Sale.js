@@ -28,12 +28,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     saleDate: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
     },
     status: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    },
   }, {
     timestamps: false,
     tableName: 'sales',
@@ -45,3 +45,5 @@ module.exports = (sequelize, DataTypes) => {
   };
   return Sale;
 };
+
+// oi
