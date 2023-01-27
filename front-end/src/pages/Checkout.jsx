@@ -1,5 +1,6 @@
+import axios from 'axios';
 import React, { useState, useContext, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CheckoutItem from '../components/CheckoutItem';
 import Navbar from '../components/Navbar';
 import CartContext from '../context/CartContext';
@@ -11,17 +12,41 @@ export default function Checkout() {
   const [deliveryNumber, setDeliveryNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const { totalCartValue, cart } = useContext(CartContext);
-  const { user } = useContext(UserContext);
-  // const navigate = useNavigate();
+  const { user, sales, setSales } = useContext(UserContext);
+  const navigate = useNavigate();
 
+  // Faz POST no back-end para salvar a sale, salva sale atual no estado e redireciona para tela de detalhes
+  const handleCheckout = async () => {
+    try {
+      const headers = { headers: { authorization: user.token } };
+      const data = {
+        cart,
+        userId: user.id,
+        sellerId,
+        totalPrice: totalCartValue,
+        deliveryAddress,
+        deliveryNumber,
+      };
+      const response = await axios.post('http://localhost:3001/checkout', data, headers);
+      const userSales = sales;
+      setSales([...userSales, response.data]);
+      navigate(`/customer/orders/${response.data.id}`);
+    } catch (error) {
+      const unauthorizedCode = 401;
+      if (error.response.status === unauthorizedCode) return handleLogout();
+    }
+  };
+
+  // Faz GET no back-end para receber lista de pessoas vendedoras, salva no estado e faz map no select
+  // WORK IN PROGRESS
   useEffect(() => {
     const getSellers = async () => {
       try {
         // const headers = { headers: { authorization: user.token } };
         // const allSellers = await axios.get('http://localhost:3001/sellers', headers);
         const allSellers = [
-          { id: 3, name: 'Fulana Pereira' },
-          { id: 4, name: 'Fulana Pereira 2' }];
+          { id: 2, name: 'Fulana Pereira' },
+        ];
         setSellers(allSellers);
         setSellerId(allSellers[0].id);
       } catch (error) {
@@ -32,26 +57,6 @@ export default function Checkout() {
 
     getSellers();
   }, []);
-
-  const handleCheckout = async () => {
-    try {
-      // const headers = { headers: { authorization: user.token } };
-      const data = {
-        cart: { ...cart },
-        userID: user.id,
-        sellerId,
-        totalPrice: totalCartValue,
-        deliveryAddress,
-        deliveryNumber,
-      };
-      // const saleId = await axios.post('http://localhost:3001/checkout', data, headers);
-      console.log(data);
-      // navigate(`localhost:3000/customer/orders/${saleId}`);
-    } catch (error) {
-      const unauthorizedCode = 401;
-      if (error.response.status === unauthorizedCode) return handleLogout();
-    }
-  };
 
   return (
     <div>

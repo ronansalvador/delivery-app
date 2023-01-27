@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CartContext from './CartContext';
-import checkoutMock from '../mocks/checkoutItensMock';
+// import checkoutMock from '../mocks/checkoutItensMock';
 
 function CartProvider({ children }) {
   const [products, setProducts] = useState();
-  const [cart, setCart] = useState(checkoutMock); // DEBUG
-  // const [cart, setCart] = useState([]);
+  // const [cart, setCart] = useState(checkoutMock); // DEBUG
+  const [cart, setCart] = useState([]);
   const [totalCartValue, setTotalCartValue] = useState(0);
 
   const contextValue = React.useMemo(() => ({
@@ -24,6 +24,17 @@ function CartProvider({ children }) {
 
     updateTotalValue();
   }, [cart]);
+
+  // Carrega carrinho do local storage caso a exista
+  useEffect(() => {
+    const loadCartFromLocalstorage = () => {
+      const loadCart = localStorage.getItem('cart');
+      const loadedCart = loadCart === null ? [] : JSON.parse(loadCart);
+      setCart(loadedCart);
+    };
+
+    loadCartFromLocalstorage();
+  }, []);
 
   return (
     <CartContext.Provider
