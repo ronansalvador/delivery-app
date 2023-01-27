@@ -5,14 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 
 export default function OrderCard({ orderDetails }) {
-  const { id, status, saleDate, totalPrice } = orderDetails;
+  const { id, status, saleDate, totalPrice, sellerId } = orderDetails;
   const { sellers } = useContext(UserContext);
   const navigate = useNavigate();
 
   const goToOrderDetails = () => {
-    // const test = seler.find((saleSeller) => saleSeller.id === id);
-    // console.log(sellers);
-    // navigate(`/customer/orders/${id}`, { state: { saleId: id, seller } });
+    const seller = sellers.find((saleSeller) => saleSeller.id === sellerId);
+    navigate(`/customer/orders/${id}`, { state: { saleId: id, seller } });
   };
 
   return (
@@ -44,5 +43,6 @@ OrderCard.propTypes = {
     status: PropTypes.string,
     saleDate: PropTypes.string,
     totalPrice: PropTypes.string,
+    sellerId: PropTypes.number,
   }).isRequired,
 };

@@ -90,7 +90,7 @@ export default function Register() {
         </button>
 
         <p
-          data-testid={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
+          className={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
           data-testid="common_register__element-invalid_register"
         >
           {loginWarning.message}
