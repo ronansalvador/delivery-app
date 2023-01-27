@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CartContext from '../context/CartContext';
 
 export default function CheckoutItem(props) {
-  const { itemDetails: { id, name, quantity, price }, index } = props;
+  const { itemDetails: { id, name, quantity, price }, index, pageTestId } = props;
   const { cart, setCart } = useContext(CartContext);
 
   const removeItem = () => {
@@ -15,24 +15,26 @@ export default function CheckoutItem(props) {
   return (
     <div>
       <p
-        data-testid={ `customer_checkout__element-order-table-item-number-${index}` }
+        data-testid={ `customer_${pageTestId}__element-order-table-item-number-${index}` }
       >
         {index + 1}
       </p>
       <p
-        data-testid={ `customer_checkout__element-order-table-name-${index}` }
+        data-testid={ `customer_${pageTestId}__element-order-table-name-${index}` }
       >
         {name}
       </p>
       <p
-        data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
+        data-testid={ `customer_${pageTestId}__element-order-table-quantity-${index}` }
       >
         {quantity}
       </p>
       <p>
         {'R$ '}
         <span
-          data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
+          data-testid={
+            `customer_${pageTestId}__element-order-table-unit-price-${index}`
+          }
         >
           {Number(price).toFixed(2).replace('.', ',')}
         </span>
@@ -40,18 +42,20 @@ export default function CheckoutItem(props) {
       <p>
         {'R$ '}
         <span
-          data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
+          data-testid={ `customer_${pageTestId}__element-order-table-sub-total-${index}` }
         >
           {(Number(price) * quantity).toFixed(2).replace('.', ',')}
         </span>
       </p>
-      <button
-        type="button"
-        data-testid={ `customer_checkout__element-order-table-remove-${index}` }
-        onClick={ removeItem }
-      >
-        Remover
-      </button>
+      { pageTestId === 'checkout' && (
+        <button
+          type="button"
+          data-testid={ `customer_${pageTestId}__element-order-table-remove-${index}` }
+          onClick={ removeItem }
+        >
+          Remover
+        </button>
+      )}
     </div>
   );
 }
@@ -64,4 +68,5 @@ CheckoutItem.propTypes = {
     quantity: PropTypes.number,
   }).isRequired,
   index: PropTypes.number.isRequired,
+  pageTestId: PropTypes.string.isRequired,
 };

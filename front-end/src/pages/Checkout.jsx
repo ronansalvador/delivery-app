@@ -66,6 +66,7 @@ export default function Checkout() {
         key={ item.id }
         index={ index }
         itemDetails={ item }
+        pageTestId="checkout"
       />)) }
       <h3>
         {'R$ '}
