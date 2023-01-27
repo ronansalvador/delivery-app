@@ -25,17 +25,17 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true,
   });
     SalesProduct.associate = (models) => {
-    models.Sale.belongsToMany(models.Product, {
-      as: 'products',
-      through: SalesProduct,
-      foreignKey: 'sale_id',
-      otherKey: 'product_id',
+      models.Sale.belongsToMany(models.Product, {
+        as: 'products',
+        through: SalesProduct,
+        foreignKey: 'saleId',
+        otherKey: 'productId',
     });
-    models.Product.belongsToMany(models.Sale, {
-      as: 'sales',
-      through: SalesProduct,
-      foreignKey: 'product_id',
-      otherKey: 'sale_id',
+      models.Product.belongsToMany(models.Sale, {
+        as: 'sales',
+        through: SalesProduct,
+        foreignKey: 'productId',
+        otherKey: 'saleId',
     });
   } 
   return SalesProduct;

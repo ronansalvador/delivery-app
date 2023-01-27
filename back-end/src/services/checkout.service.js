@@ -1,5 +1,4 @@
-const { Sale } = require('../database/models');
-// const { createSalesProduct } = require('./saleProduct.service');
+const { Sale, SalesProduct } = require('../database/models');
 
 const createSales = async (checkout) => {
   const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, cart } = checkout;
@@ -17,9 +16,10 @@ const createSales = async (checkout) => {
   });
 
   const sale = createSale.dataValues;
-  // const saleId = sale.id;
+  const saleId = sale.id;
 
-  // createSalesProduct(cart, saleId);
+  Promise.all(cart.map(async ({ id, quantity }) => SalesProduct
+  .create({ saleId, productId: id, quantity })));
 
   return { type: 201, message: { cart, ...sale } };
 };
