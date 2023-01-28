@@ -7,6 +7,7 @@ function UserProvider({ children }) {
   // Busca usuário no localstorage e salva no estado
   const savedUser = JSON.parse(localStorage.getItem('user'));
   const [user, setUser] = useState(savedUser);
+  const [products, setProducts] = useState([]);
   const [sales, setSales] = useState([]);
   const [sellers, setSellers] = useState([]);
 
@@ -18,7 +19,6 @@ function UserProvider({ children }) {
   };
 
   // Faz GET no back-end para receber lista de vendas referentes ao usuário e salva no estado
-  // WORK IN PROGRESS
   useEffect(() => {
     const getSales = async () => {
       if (user === null) return;
@@ -53,9 +53,26 @@ function UserProvider({ children }) {
     getSellers();
   }, [user]);
 
+  // Faz GET no back-end para receber produtos
+  useEffect(() => {
+    const getAllProducts = async () => {
+      if (user === null) return;
+      try {
+        const headers = { headers: { authorization: user.token } };
+        const allProducts = await axios.get('http://localhost:3001/products', headers);
+        setProducts(allProducts.data);
+      } catch (error) {
+        const unauthorizedCode = 401;
+        if (error.response.status === unauthorizedCode) return handleLogout();
+      }
+    };
+
+    getAllProducts();
+  }, [user]);
+
   const contextValue = React.useMemo(() => ({
-    user, sales, sellers, setSellers, setUser, handleLogout, setSales,
-  }), [user, sales, sellers]);
+    user, sales, sellers, products, setSellers, setUser, handleLogout, setSales,
+  }), [user, sales, sellers, products]);
 
   return (
     <UserContext.Provider

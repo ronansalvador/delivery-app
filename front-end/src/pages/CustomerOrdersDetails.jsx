@@ -11,7 +11,27 @@ export default function CustomerOrdersDetails() {
   const { saleId, seller } = state;
   const [currSale, setCurrSale] = useState({});
   const [index, setIndex] = useState(0);
-  const { sales } = useContext(UserContext);
+  const { sales, products } = useContext(UserContext);
+
+  // Salvo conteúdo do data-testid em constante para evitar erros de lint
+  const SELLET_ID = 'customer_order_details__element-order-details-label-seller-name';
+  const STATUS_ID = 'customer_order_details__element-order-details-label-delivery-status';
+
+  // TEMPORÁRIO
+  // As informações usadas vem da rota GET /sales/:id e são salvas no estado "sales"
+  // Não existe uma forma fácil de acessar o nome do produto, então é necessário comparar o seu id com o de todos os produtos
+  // Será atualizada a rota do back-end para retornar o nome do produto e a criação do card vai ser simplificada
+  const createItemCard = (item, itemIndex) => {
+    const itemDetails = products.find((product) => product.id === item.productId);
+    return (
+      <CheckoutItem
+        key={ `${item.id}-order_details` }
+        index={ itemIndex }
+        itemDetails={ { ...itemDetails, quantity: item.quantity } }
+        pageTestId="order_details"
+      />
+    );
+  };
 
   // Busca no estado a sale com o id correspondente a rota e salva ela e seu index no estado
   useEffect(() => {
@@ -40,7 +60,7 @@ export default function CustomerOrdersDetails() {
               {currSale.id}
             </p>
             <p
-              data-testid="customer_order_details__element-order-details-label-seller-name"
+              data-testid={ SELLET_ID }
             >
               {seller.name}
             </p>
@@ -50,9 +70,7 @@ export default function CustomerOrdersDetails() {
               {moment(currSale.saleDate).format('DD/MM/YYYY')}
             </p>
             <p
-              data-testid={
-                `customer_order_details__element-order-details-label-delivery-status${index}`
-              }
+              data-testid={ `${STATUS_ID}${index}` }
             >
               {currSale.status}
             </p>
@@ -65,13 +83,7 @@ export default function CustomerOrdersDetails() {
               Marcar Como Entregue
             </button>
             {currSale.cart && currSale.cart.map((item, mapIndex) => (
-              <CheckoutItem
-                key={ item.id }
-                index={ mapIndex }
-                itemDetails={ item }
-                pageTestId="order_details"
-              />
-            ))}
+              createItemCard(item, mapIndex)))}
             <p>
               {'Total: R$ '}
               <span data-testid="customer_order_details__element-order-total-price">

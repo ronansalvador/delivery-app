@@ -7,6 +7,7 @@ export default function CheckoutItem(props) {
   const { itemDetails: { id, name, quantity, price }, index, pageTestId } = props;
   const { cart, setCart } = useContext(CartContext);
 
+  // Remove item do estado do carrinho e da chave cart do localstorage
   const removeItem = () => {
     const oldCart = cart;
     const newCart = oldCart.filter((product) => product.id !== id);

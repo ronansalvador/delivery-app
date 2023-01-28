@@ -30,7 +30,7 @@ export default function OrderCard({ orderDetails }) {
           {moment(saleDate).format('DD/MM/YYYY')}
         </p>
         <p data-testid={ `customer_orders__element-card-price-${id}` }>
-          {totalPrice}
+          {Number(totalPrice).toFixed(2).toString().replace('.', ',')}
         </p>
       </div>
     </button>
