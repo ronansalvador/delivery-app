@@ -4,14 +4,25 @@ import moment from 'moment/moment';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 
-export default function OrderCard({ orderDetails }, currentRole) {
-  const { id, status, saleDate, totalPrice, sellerId } = orderDetails;
-  const { sellers } = useContext(UserContext);
+export default function OrderCard({ orderDetails }) {
+  const {
+    id,
+    status,
+    saleDate,
+    totalPrice,
+    sellerId,
+    deliveryAddress,
+    deliveryNumber,
+  } = orderDetails;
+
+  const { sellers, user } = useContext(UserContext);
+  const currentRole = user.role;
   const navigate = useNavigate();
 
+  // direcionar de acordo com a role
   const goToOrderDetails = () => {
     const seller = sellers.find((saleSeller) => saleSeller.id === sellerId);
-    navigate(`/customer/orders/${id}`, { state: { saleId: id, seller } });
+    navigate(`/${user.role}/orders/${id}`, { state: { saleId: id, seller } });
   };
 
   return (
@@ -34,7 +45,7 @@ export default function OrderCard({ orderDetails }, currentRole) {
         </p>
       </div>
       { currentRole === 'seller'
-      && <p>{ address }</p> }
+      && <p>{ `${deliveryAddress}, ${deliveryNumber} ` }</p> }
     </button>
   );
 }
@@ -44,7 +55,9 @@ OrderCard.propTypes = {
     id: PropTypes.number,
     status: PropTypes.string,
     saleDate: PropTypes.string,
-    totalPrice: PropTypes.string,
+    totalPrice: PropTypes.number,
     sellerId: PropTypes.number,
+    deliveryAddress: PropTypes.string,
+    deliveryNumber: PropTypes.number,
   }).isRequired,
 };

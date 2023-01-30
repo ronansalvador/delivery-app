@@ -7,10 +7,17 @@ import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import CustomerOrders from './pages/CustomerOrders';
 import './styles';
-import CustomerOrdersDetails from './pages/CustomerOrdersDetails';
+import OrdersDetails from './pages/OrdersDetails';
+import SellerOrders from './pages/SellerOrders';
 
 function App() {
   const { user } = useContext(UserContext);
+  // const [url, setUrl] = useState('');
+
+  const checkRole = () => {
+    if (user.role === 'customer') return '/customer/products';
+    if (user.role === 'seller') return '/seller/orders';
+  };
 
   return (
     <BrowserRouter>
@@ -26,11 +33,11 @@ function App() {
             </>)
           : (
             <>
-              <Route exact path="/" element={ <Navigate to="/customer/products" /> } />
+              <Route exact path="/" element={ <Navigate to={ checkRole() } /> } />
               <Route
                 exact
                 path="/login"
-                element={ <Navigate to="/customer/products" /> }
+                element={ <Navigate to={ checkRole() } /> }
               />
               <Route exact path="/customer/products" element={ <CustomerProducts /> } />
               <Route exact path="/customer/checkout" element={ <Checkout /> } />
@@ -38,7 +45,13 @@ function App() {
               <Route
                 exact
                 path="/customer/orders/:id"
-                element={ <CustomerOrdersDetails /> }
+                element={ <OrdersDetails /> }
+              />
+              <Route exact path="/seller/orders" element={ <SellerOrders /> } />
+              <Route
+                exact
+                path="/seller/orders/:id"
+                element={ <OrdersDetails /> }
               />
             </>
           )}
