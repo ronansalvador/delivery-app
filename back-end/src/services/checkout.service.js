@@ -24,4 +24,17 @@ const createSales = async (checkout) => {
   return { type: 201, message: { cart, ...sale } };
 };
 
+// const getByProductName = async (id) => {
+//   const productId = Number(id);
+//   // const productName = await Product.findAll({ 
+//   //   attributes: ['name'], 
+//   //   where: { id: productId }, 
+//   //   raw: true, 
+//   // });
+
+//   const cart = await Sale.findAll({ attributes: ['cart'], where: { id: productId }, raw: true });
+  
+//   return { type: 200, message: [...cart] };
+// };
+
 module.exports = { createSales };

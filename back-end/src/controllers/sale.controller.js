@@ -1,11 +1,18 @@
 const saleService = require('../services/sale.service');
 
-const getSaleById = async (req, res) => {
+const saleByCustomerId = async (req, res) => {
   const { id } = req.params;
-  const { type, message } = await saleService.saleById(id);
+  const { type, message } = await saleService.saleByCustomerId(id);
+  res.status(type).json(message);
+};
+
+const saleBySellerId = async (req, res) => {
+  const { id } = req.params;
+  const { type, message } = await saleService.saleBySellerId(id);
   res.status(type).json(message);
 };
 
 module.exports = {
-  getSaleById,
+  saleByCustomerId,
+  saleBySellerId,
 };
