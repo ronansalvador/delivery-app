@@ -1,8 +1,9 @@
 const express = require('express');
-const selesController = require('../controllers/sale.controller');
+const salesController = require('../controllers/sale.controller');
 
-const sellerRoutes = express.Router();
+const salesRoutes = express.Router();
 
-sellerRoutes.get('/:id', selesController.getSaleById);
+salesRoutes.get('/customer/:id', salesController.saleByCustomerId);
+salesRoutes.get('/saller/:id', salesController.saleBySellerId);
 
-module.exports = sellerRoutes;
+module.exports = salesRoutes;

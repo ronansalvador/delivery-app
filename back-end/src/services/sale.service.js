@@ -1,7 +1,7 @@
 const { Sale, SalesProduct, Product } = require('../database/models');
 
-const saleById = async (id) => {
-  const sale = await Sale.findAll({ where: { userId: Number(id) }, raw: true });
+const saleById = async (sale) => {
+  // const sale = await Sale.findAll({ where: { userId: Number(id) }, raw: true });
 
   if (!sale) {
     return { type: 200, message: {} };
@@ -21,4 +21,14 @@ const saleById = async (id) => {
   return { type: 200, message: [...salesProudct] };
 };
 
-module.exports = { saleById };
+const saleByCustomerId = async (id) => {
+  const sale = await Sale.findAll({ where: { userId: Number(id) }, raw: true });
+  return saleById(sale);
+};
+
+const saleBySellerId = async (id) => {
+  const sale = await Sale.findAll({ where: { sellerId: Number(id) }, raw: true });
+  return saleById(sale);
+};
+
+module.exports = { saleByCustomerId, saleBySellerId };
