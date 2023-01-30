@@ -11,27 +11,11 @@ export default function CustomerOrdersDetails() {
   const { saleId, seller } = state;
   const [currSale, setCurrSale] = useState({});
   const [index, setIndex] = useState(0);
-  const { sales, products } = useContext(UserContext);
+  const { sales } = useContext(UserContext);
 
   // Salvo conteúdo do data-testid em constante para evitar erros de lint
   const SELLET_ID = 'customer_order_details__element-order-details-label-seller-name';
   const STATUS_ID = 'customer_order_details__element-order-details-label-delivery-status';
-
-  // TEMPORÁRIO
-  // As informações usadas vem da rota GET /sales/:id e são salvas no estado "sales"
-  // Não existe uma forma fácil de acessar o nome do produto, então é necessário comparar o seu id com o de todos os produtos
-  // Será atualizada a rota do back-end para retornar o nome do produto e a criação do card vai ser simplificada
-  const createItemCard = (item, itemIndex) => {
-    const itemDetails = products.find((product) => product.id === item.productId);
-    return (
-      <CheckoutItem
-        key={ `${item.id}-order_details` }
-        index={ itemIndex }
-        itemDetails={ { ...itemDetails, quantity: item.quantity } }
-        pageTestId="order_details"
-      />
-    );
-  };
 
   // Busca no estado a sale com o id correspondente a rota e salva ela e seu index no estado
   useEffect(() => {
@@ -82,8 +66,13 @@ export default function CustomerOrdersDetails() {
             >
               Marcar Como Entregue
             </button>
-            {currSale.cart && currSale.cart.map((item, mapIndex) => (
-              createItemCard(item, mapIndex)))}
+            {currSale.cart && currSale.cart.map((item, itemIndex) => (
+              <CheckoutItem
+                key={ `${itemIndex}-order_details` }
+                index={ itemIndex }
+                itemDetails={ item }
+                pageTestId="order_details"
+              />))}
             <p>
               {'Total: R$ '}
               <span data-testid="customer_order_details__element-order-total-price">

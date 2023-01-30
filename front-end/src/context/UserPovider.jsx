@@ -24,7 +24,7 @@ function UserProvider({ children }) {
       if (user === null) return;
       try {
         const headers = { headers: { authorization: user.token } };
-        const response = await axios.get(`http://localhost:3001/sales/${user.id}`, headers);
+        const response = await axios.get(`http://localhost:3001/sales/${user.role}/${user.id}`, headers);
         setSales(response.data);
       } catch (error) {
         const unauthorizedCode = 401;
