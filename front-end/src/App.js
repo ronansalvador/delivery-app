@@ -38,7 +38,6 @@ function App() {
               <Route
                 exact
                 path="/customer/orders/:id"
-                id=":id"
                 element={ <CustomerOrdersDetails /> }
               />
             </>
