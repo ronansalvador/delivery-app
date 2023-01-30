@@ -4,14 +4,13 @@ import CartContext from './CartContext';
 // import checkoutMock from '../mocks/checkoutItensMock';
 
 function CartProvider({ children }) {
-  const [products, setProducts] = useState();
   // const [cart, setCart] = useState(checkoutMock); // DEBUG
   const [cart, setCart] = useState([]);
   const [totalCartValue, setTotalCartValue] = useState(0);
 
   const contextValue = React.useMemo(() => ({
-    products, setProducts, cart, setCart, totalCartValue,
-  }), [products, cart, totalCartValue]);
+    cart, setCart, totalCartValue,
+  }), [cart, totalCartValue]);
 
   // Calcula valor total e salva no estado sempre que o carrinho é atualizado
   useEffect(() => {

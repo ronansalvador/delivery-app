@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Navbar from '../components/Navbar';
 import CartContext from '../context/CartContext';
 import ProductCard from '../components/ProductCard';
@@ -8,8 +7,8 @@ import UserContext from '../context/UserContext';
 
 export default function CustomerProducts() {
   const [loading, setLoading] = useState(true);
-  const { user, handleLogout } = useContext(UserContext);
-  const { products, setProducts, totalCartValue } = useContext(CartContext);
+  const { products } = useContext(UserContext);
+  const { totalCartValue } = useContext(CartContext);
   const navigate = useNavigate();
 
   // Faz POST no back-end para adicionar compra, redireciona para tela de checkout
@@ -17,22 +16,14 @@ export default function CustomerProducts() {
     navigate('/customer/checkout');
   };
 
-  // Faz GET no back-end para receber produtos
+  // Fica em estado de loading até a lista de produtos vir da requisição feita no UserProvider
   useEffect(() => {
     const getAllProducts = async () => {
-      try {
-        const headers = { headers: { authorization: user.token } };
-        const allProducts = await axios.get('http://localhost:3001/products', headers);
-        setProducts(allProducts.data);
-        setLoading(false);
-      } catch (error) {
-        const unauthorizedCode = 401;
-        if (error.response.status === unauthorizedCode) return handleLogout();
-      }
+      if (products.length) setLoading(false);
     };
 
     getAllProducts();
-  }, [user]);
+  }, [products]);
 
   return (
     <div>
