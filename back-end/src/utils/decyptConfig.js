@@ -9,6 +9,7 @@ const createHash = (password) => {
 // Função que desencripta senha do banco de dados.
 const compareHash = (password, originalHash) => {
   const newHash = crypto.createHash('md5').update(password).digest('hex');
+  console.log(newHash);
   return newHash === originalHash;
 };
 module.exports = { compareHash, createHash };

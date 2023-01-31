@@ -9,6 +9,7 @@ import CustomerOrders from './pages/CustomerOrders';
 import './styles';
 import OrdersDetails from './pages/OrdersDetails';
 import SellerOrders from './pages/SellerOrders';
+import AdminManage from './pages/AdminManage';
 
 function App() {
   const { user } = useContext(UserContext);
@@ -17,6 +18,7 @@ function App() {
   const checkRole = () => {
     if (user.role === 'customer') return '/customer/products';
     if (user.role === 'seller') return '/seller/orders';
+    if (user.role === 'administrator') return '/admin/manage';
   };
 
   return (
@@ -53,6 +55,7 @@ function App() {
                 path="/seller/orders/:id"
                 element={ <OrdersDetails /> }
               />
+              <Route exact path="/admin/manage" element={ <AdminManage /> } />
             </>
           )}
       </Routes>
