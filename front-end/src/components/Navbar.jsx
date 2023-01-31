@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import UserContext from '../context/UserContext';
 import NavCustomerProducts from './NavCustomerProducts';
 import NavSellerOrder from './NavSellerOrder';
+import NavAdminManage from './NavAdminManage';
 
 export default function Navbar() {
   const { user, handleLogout } = useContext(UserContext);
@@ -11,7 +12,7 @@ export default function Navbar() {
     <nav>
       {role === 'customer' && <NavCustomerProducts />}
       {role === 'seller' && <NavSellerOrder />}
-      {/* {role === 'admin' && <NavAdminManage />} */}
+      {role === 'administrator' && <NavAdminManage />}
       <p data-testid="customer_products__element-navbar-user-full-name">{`${name}`}</p>
       <button
         data-testid="customer_products__element-navbar-link-logout"

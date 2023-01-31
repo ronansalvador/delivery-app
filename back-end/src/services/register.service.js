@@ -2,7 +2,7 @@ const { User } = require('../database/models');
 const decryptMD5 = require('../utils/decyptConfig');
 const jwt = require('../utils/jwtConfig');
 
-const register = async ({ name, email, password, role }) => {
+const register = async ({ name, email, password, role = 'customer' }) => {
   // Busca o compo "email" no banco de dados, retornando o email e tudo que está relacionado a ele.
   const loginValidate = await User.findOne({ where: { email, name }, raw: true });
 
