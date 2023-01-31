@@ -25,7 +25,7 @@ export default function Register() {
 
   // Faz POST no back-end para validar registro, efetua login e redireciona ou salva mensagem de erro no estado
   const handleRegister = async () => {
-    const data = { name, email, password, role: 'customer' };
+    const data = { name, email, password };
     try {
       const response = await axios.post('http://localhost:3001/register', data);
       if ('message' in response) return setLoginWarning(response.data);
