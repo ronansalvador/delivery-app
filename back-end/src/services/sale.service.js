@@ -33,4 +33,20 @@ const saleBySellerId = async (id) => {
   return saleById(sale);
 };
 
-module.exports = { saleByCustomerId, saleBySellerId };
+const saleByUpdateStatus = async ({ id, status }) => {
+  const saleId = Number(id);
+
+  const statusSale = {
+    pendente: 'Preparando',
+    preparando: 'Em Transito',
+    emTransito: 'Entregue',
+  };
+
+  const newStatus = { status: statusSale[status] };
+
+  await Sale.update(newStatus, { where: { id: saleId } }); 
+
+  return { type: 200, message: newStatus };
+};
+
+module.exports = { saleByCustomerId, saleBySellerId, saleByUpdateStatus };
