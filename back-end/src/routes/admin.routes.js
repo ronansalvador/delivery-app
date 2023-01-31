@@ -5,6 +5,6 @@ const adminRoutes = express.Router();
 
 adminRoutes.get('/', adminController.getUsers);
 adminRoutes.post('/', adminController.postUser);
-adminRoutes.delete('/', adminController.deleteUser);
+adminRoutes.delete('/:id', adminController.deleteUser);
 
 module.exports = adminRoutes; 
