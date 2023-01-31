@@ -11,7 +11,7 @@ export default function ButtonOrdersDetails({ status, updateStatus }) {
         <button
           type="button"
           data-testid="customer_order_details__button-delivery-check"
-          disabled
+          disabled={ (status === /Em Transito/i) }
           onClick={ () => updateStatus(status) }
         >
           Marcar Como Entregue
