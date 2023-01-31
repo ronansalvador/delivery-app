@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import CheckoutItem from '../components/CheckoutItem';
 import Navbar from '../components/Navbar';
 import UserContext from '../context/UserContext';
+import ButtonOrdersDetails from '../components/ButtonOrdersDetails';
 
 export default function CustomerOrdersDetails() {
   const [loading, setLoading] = useState(true);
@@ -11,11 +12,13 @@ export default function CustomerOrdersDetails() {
   const { saleId, seller } = state;
   const [currSale, setCurrSale] = useState({});
   const [index, setIndex] = useState(0);
-  const { sales } = useContext(UserContext);
+  const { sales, user } = useContext(UserContext);
 
   // Salvo conteúdo do data-testid em constante para evitar erros de lint
-  const SELLET_ID = 'customer_order_details__element-order-details-label-seller-name';
-  const STATUS_ID = 'customer_order_details__element-order-details-label-delivery-status';
+  const SELLER_ID = 'customer_order_details__element-order-details-label-seller-name';
+  const STATUS_ID = '_order_details__element-order-details-label-delivery-status';
+  const ORDER_ID = '_order_details__element-order-details-label-order-id';
+  const DATE_ID = '_order_details__element-order-details-label-order-date';
 
   // Busca no estado a sale com o id correspondente a rota e salva ela e seu index no estado
   useEffect(() => {
@@ -39,43 +42,42 @@ export default function CustomerOrdersDetails() {
           <>
             <h2>Detalhes do Pedido</h2>
             <p
-              data-testid="customer_order_details__element-order-details-label-order-id"
+              data-testid={ `${user.role}${ORDER_ID}` }
             >
               {currSale.id}
             </p>
+            {/* somente para customer */}
+            {(user.role === 'customer') && (
+              <p
+                data-testid={ SELLER_ID }
+              >
+                {seller.name || 'Fulana Pereira'}
+              </p>
+            )}
             <p
-              data-testid={ SELLET_ID }
-            >
-              {seller.name}
-            </p>
-            <p
-              data-testid="customer_order_details__element-order-details-label-order-date"
+              data-testid={ `${user.role}${DATE_ID}` }
             >
               {moment(currSale.saleDate).format('DD/MM/YYYY')}
             </p>
             <p
-              data-testid={ `${STATUS_ID}${index}` }
+              data-testid={ `${user.role}${STATUS_ID}${index}` }
             >
               {currSale.status}
             </p>
-            <button
-              type="button"
-              data-testid="customer_order_details__button-delivery-check"
-              disabled
-              onClick={ () => console.log('WIP') }
-            >
-              Marcar Como Entregue
-            </button>
+            {/* somente para customer */}
+            <ButtonOrdersDetails />
             {currSale.cart && currSale.cart.map((item, itemIndex) => (
               <CheckoutItem
                 key={ `${itemIndex}-order_details` }
                 index={ itemIndex }
                 itemDetails={ item }
-                pageTestId="order_details"
+                pageTestId={ `${user.role}_order_details` }
               />))}
             <p>
               {'Total: R$ '}
-              <span data-testid="customer_order_details__element-order-total-price">
+              <span
+                data-testid={ `${user.role}_order_details__element-order-total-price` }
+              >
                 {currSale.totalPrice
                   && Number(currSale.totalPrice).toFixed(2).replace('.', ',')}
               </span>

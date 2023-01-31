@@ -18,17 +18,17 @@ export default function CheckoutItem(props) {
   return (
     <div>
       <p
-        data-testid={ `customer_${pageTestId}__element-order-table-item-number-${index}` }
+        data-testid={ `${pageTestId}__element-order-table-item-number-${index}` }
       >
         {index + 1}
       </p>
       <p
-        data-testid={ `customer_${pageTestId}__element-order-table-name-${index}` }
+        data-testid={ `${pageTestId}__element-order-table-name-${index}` }
       >
         {name}
       </p>
       <p
-        data-testid={ `customer_${pageTestId}__element-order-table-quantity-${index}` }
+        data-testid={ `${pageTestId}__element-order-table-quantity-${index}` }
       >
         {quantity}
       </p>
@@ -36,7 +36,7 @@ export default function CheckoutItem(props) {
         {'R$ '}
         <span
           data-testid={
-            `customer_${pageTestId}__element-order-table-unit-price-${index}`
+            `${pageTestId}__element-order-table-unit-price-${index}`
           }
         >
           {Number(price).toFixed(2).replace('.', ',')}
@@ -45,15 +45,15 @@ export default function CheckoutItem(props) {
       <p>
         {'R$ '}
         <span
-          data-testid={ `customer_${pageTestId}__element-order-table-sub-total-${index}` }
+          data-testid={ `${pageTestId}__element-order-table-sub-total-${index}` }
         >
           {(Number(price) * quantity).toFixed(2).replace('.', ',')}
         </span>
       </p>
-      { pageTestId === 'checkout' && (
+      { pageTestId === 'customer_checkout' && (
         <button
           type="button"
-          data-testid={ `customer_${pageTestId}__element-order-table-remove-${index}` }
+          data-testid={ `${pageTestId}__element-order-table-remove-${index}` }
           onClick={ removeItem }
         >
           Remover

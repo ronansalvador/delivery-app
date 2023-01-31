@@ -7,8 +7,12 @@ import saveLocalStorage from '../helpers/saveLocalStorage';
 
 export default function Login() {
   const { setUser } = useContext(UserContext);
-  // const [email, setEmail] = useState('zebirita@email.com'); // DEBUG
-  // const [password, setPassword] = useState('$#zebirita#$'); // DEBUG
+  // const [email, setEmail] = useState('zebirita@email.com'); // DEBUG customer
+  // const [password, setPassword] = useState('$#zebirita#$'); // DEBUG customer
+  // const [email, setEmail] = useState('fulana@deliveryapp.com'); // DEBUG seller
+  // const [password, setPassword] = useState('fulana@123'); // DEBUG seller
+  // const [email, setEmail] = useState('adm@deliveryapp.com'); // DEBUG Admin
+  // const [password, setPassword] = useState('--adm2@21!!--'); // DEBUG Admin
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validLogin, setValidLogin] = useState(false);
@@ -35,8 +39,13 @@ export default function Login() {
       await setUser(response.data);
       // Redireciona de acordo com a role
       saveLocalStorage('user', response.data);
+      // console.log('role login', response.data.role);
+      // console.log('user role', user.role);
       if (response.data.role === 'customer') return navigate('/customer/products');
-      if (response.data.role === 'seller') return navigate('/seller/orders');
+      if (response.data.role === 'seller') {
+        console.log('entrou no if se seller');
+        return navigate('/seller/orders');
+      }
       navigate('/admin/manage');
     } catch (error) {
       setLoginWarning(error.response.data);

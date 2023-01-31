@@ -11,9 +11,14 @@ export default function Checkout() {
   const [seller, setSeller] = useState({});
   const [deliveryNumber, setDeliveryNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
-  const { totalCartValue, cart } = useContext(CartContext);
+  const { totalCartValue, cart, setCart } = useContext(CartContext);
   const { user, sales, setSales, sellers } = useContext(UserContext);
   const navigate = useNavigate();
+
+  const clearUserInfo = () => {
+    localStorage.removeItem('cart');
+    setCart([]);
+  };
 
   // Faz POST no back-end para salvar a sale, salva sale atual no estado e redireciona para tela de detalhes
 
@@ -33,6 +38,7 @@ export default function Checkout() {
       const userSales = sales;
       setSales([...userSales, response.data]);
       const saleId = response.data.id;
+      clearUserInfo();
       navigate(`/customer/orders/${saleId}`, { state: { saleId, seller } });
     } catch (error) {
       const unauthorizedCode = 401;
@@ -59,7 +65,7 @@ export default function Checkout() {
         key={ `${item.id}-checkout` }
         index={ index }
         itemDetails={ item }
-        pageTestId="checkout"
+        pageTestId="customer_checkout"
       />)) }
       <h3>
         {'R$ '}
