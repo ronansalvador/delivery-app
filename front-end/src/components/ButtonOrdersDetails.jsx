@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import UserContext from '../context/UserContext';
 
-export default function ButtonOrdersDetails() {
+export default function ButtonOrdersDetails({ status, updateStatus }) {
   const { user } = useContext(UserContext);
+  console.log(status);
   console.log(user.role);
   return (
     <div>
@@ -10,8 +11,8 @@ export default function ButtonOrdersDetails() {
         <button
           type="button"
           data-testid="customer_order_details__button-delivery-check"
-          disabled
-          onClick={ () => console.log('WIP') }
+          disabled={ (status === /Em Transito/i) }
+          onClick={ () => updateStatus(status) }
         >
           Marcar Como Entregue
         </button>)}
@@ -20,13 +21,18 @@ export default function ButtonOrdersDetails() {
           <button
             type="button"
             data-testid="seller_order_details__button-preparing-check"
+            disabled={ (status !== /pendente/i) }
+            // click deve mudar o status para Preparando
+            onClick={ () => updateStatus(status) }
           >
             Preparar Pedido
           </button>
           <button
             type="button"
             data-testid="seller_order_details__button-dispatch-check"
-            disabled
+            disabled={ (status === /Preparando/i) }
+            // click deve mudar o status para Em Trânsito
+            onClick={ () => updateStatus(status) }
           >
             Saiu para entrega
           </button>
@@ -35,3 +41,8 @@ export default function ButtonOrdersDetails() {
     </div>
   );
 }
+
+ButtonOrdersDetails.propTypes = {
+  status: PropTypes.string.isRequired,
+  updateStatus: PropTypes.func.isRequired,
+};
