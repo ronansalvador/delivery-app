@@ -7,4 +7,11 @@ const createSale = async (req, res) => {
   return res.status(type).json(message);
 };
 
-module.exports = { createSale };
+const getByProductName = async (req, res) => {
+  const { id } = req.params;
+  const { type, message } = await checkoutService.getByProductName(id);
+  
+  return res.status(type).json(message);
+};
+
+module.exports = { createSale, getByProductName };

@@ -4,7 +4,7 @@ import moment from 'moment/moment';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 
-export default function OrderCard({ orderDetails }) {
+export default function OrderCard({ orderDetails }, currentRole) {
   const { id, status, saleDate, totalPrice, sellerId } = orderDetails;
   const { sellers } = useContext(UserContext);
   const navigate = useNavigate();
@@ -19,20 +19,22 @@ export default function OrderCard({ orderDetails }) {
       type="button"
       onClick={ goToOrderDetails }
     >
-      <p data-testid={ `customer_orders__element-order-id-${id}` }>
+      <p data-testid={ `${currentRole}_orders__element-order-id-${id}` }>
         {`pedido: ${id}`}
       </p>
-      <p data-testid={ `customer_orders__element-delivery-status-${id}` }>
+      <p data-testid={ `${currentRole}_orders__element-delivery-status-${id}` }>
         {status}
       </p>
       <div>
-        <p data-testid={ `customer_orders__element-order-date-${id}` }>
+        <p data-testid={ `${currentRole}_orders__element-order-date-${id}` }>
           {moment(saleDate).format('DD/MM/YYYY')}
         </p>
-        <p data-testid={ `customer_orders__element-card-price-${id}` }>
+        <p data-testid={ `${currentRole}_orders__element-card-price-${id}` }>
           {Number(totalPrice).toFixed(2).toString().replace('.', ',')}
         </p>
       </div>
+      { currentRole === 'seller'
+      && <p>{ address }</p> }
     </button>
   );
 }

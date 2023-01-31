@@ -25,10 +25,10 @@ export default function CustomerOrders() {
             { sales.map((order) => (<OrderCard
               key={ order.id }
               orderDetails={ order }
+              currentRole="customer"
             />)) }
           </>
         )}
-
     </div>
   );
 }
