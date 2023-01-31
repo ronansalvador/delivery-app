@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import Navbar from '../components/Navbar';
+import UserCard from '../components/UserCard';
 import UserContext from '../context/UserContext';
 import validateEmail from '../helpers/validateEmail';
+import usersMock from '../mocks/usersMock';
 
 export default function AdminManage() {
+  const [users, setUsers] = useState([]);
   const [loginWarning, setLoginWarning] = useState({});
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -33,6 +36,18 @@ export default function AdminManage() {
     }
   };
 
+  const deleteUser = async (id) => {
+    try {
+      // const headers = { headers: { authorization: user.token } };
+      // Combinar rota e validação de role com back-end
+      // const allSellers = await axios.get(`http://localhost:3001/admin/delete/${id}`, headers);
+      const newUserList = users.filter((currUser) => currUser.id !== id);
+      setUsers(newUserList);
+    } catch (error) {
+      const unauthorizedCode = 401;
+      if (error.response.status === unauthorizedCode) return handleLogout();
+    }
+  };
   // Valida os camois
   const ValidateRegister = () => {
     const validEmail = validateEmail(email);
@@ -46,6 +61,17 @@ export default function AdminManage() {
   useEffect(() => {
     ValidateRegister();
   }, [name, email, password, role]);
+
+  useEffect(() => {
+    const loadUsers = () => {
+      const mockAxios = usersMock;
+      const filteredUsers = mockAxios.filter((responseUser) => (
+        Number(responseUser.id) !== user.id));
+      setUsers(filteredUsers);
+    };
+
+    loadUsers();
+  }, []);
 
   return (
     <div>
@@ -118,6 +144,16 @@ export default function AdminManage() {
           CADASTRAR
         </button>
       </form>
+      <div>
+        {users.length > 0 && users.map((currUser, index) => (
+          <UserCard
+            userDetails={ currUser }
+            key={ currUser.id }
+            index={ index }
+            deleteUser={ deleteUser }
+          />
+        ))}
+      </div>
     </div>
   );
 }
