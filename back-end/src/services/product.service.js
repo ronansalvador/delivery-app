@@ -1,5 +1,4 @@
 const { Product } = require('../database/models');
-// const { createSaleProduct } = require('./saleProduct.service');
 
 const getAllProducts = async () => {
   // Busca todos os produtos no banco de dados.
