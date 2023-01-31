@@ -15,7 +15,7 @@ const login = async ({ email, password }) => {
   const emailValidate = await User.findOne({ where: { email }, raw: true });
 
   if (!emailValidate) {
-    return { type: 404, message: { message: 'email ou senha incorretos' } };
+    return { type: 404, message: { message: 'Email ou senha incorretos' } };
   }
 
   // Hash armazenada no banco de dados.
@@ -24,7 +24,7 @@ const login = async ({ email, password }) => {
   // Função que compara a senha do input com a original do banco de dados.
   const decrypt = decryptMD5.compareHash(password, hashOriginal);
   if (decrypt !== true) {
-    return { type: 404, message: { message: 'email ou senha incorretos' } };
+    return { type: 404, message: { message: 'Email ou senha incorretos' } };
   }
 
   // Remove a senha do usuário, para gerar o token.
