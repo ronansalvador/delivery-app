@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment/moment';
+import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import CheckoutItem from '../components/CheckoutItem';
 import Navbar from '../components/Navbar';
@@ -12,7 +13,7 @@ export default function CustomerOrdersDetails() {
   const { saleId, seller } = state;
   const [currSale, setCurrSale] = useState({});
   const [index, setIndex] = useState(0);
-  const { sales, user } = useContext(UserContext);
+  const { sales, user, setSales } = useContext(UserContext);
 
   // Salvo conteúdo do data-testid em constante para evitar erros de lint
   const SELLER_ID = 'customer_order_details__element-order-details-label-seller-name';
@@ -32,6 +33,22 @@ export default function CustomerOrdersDetails() {
     };
     findSaleById();
   }, [sales]);
+
+  // função que altera o status do pedido no backend
+
+  const updateStatus = async (status) => {
+    setLoading(true);
+    try {
+      const data = { status };
+      const headers = { headers: { authorization: user.token } };
+      const response = await axios.put('http://localhost:3001/sales/update', data, headers);
+      setSales(response.data);
+    } catch (error) {
+      const unauthorizedCode = 401;
+      if (error.response.status === unauthorizedCode) return handleLogout();
+    }
+    setLoading(false);
+  };
 
   return (
     <div>
@@ -65,7 +82,10 @@ export default function CustomerOrdersDetails() {
               {currSale.status}
             </p>
             {/* somente para customer */}
-            <ButtonOrdersDetails />
+            <ButtonOrdersDetails
+              status={ currSale.status }
+              updateStatus={ updateStatus }
+            />
             {currSale.cart && currSale.cart.map((item, itemIndex) => (
               <CheckoutItem
                 key={ `${itemIndex}-order_details` }

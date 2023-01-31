@@ -9,10 +9,10 @@ export default function Login() {
   const { setUser } = useContext(UserContext);
   // const [email, setEmail] = useState('zebirita@email.com'); // DEBUG customer
   // const [password, setPassword] = useState('$#zebirita#$'); // DEBUG customer
-  // const [email, setEmail] = useState('fulana@deliveryapp.com'); // DEBUG seller
-  // const [password, setPassword] = useState('fulana@123'); // DEBUG seller
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('fulana@deliveryapp.com'); // DEBUG seller
+  const [password, setPassword] = useState('fulana@123'); // DEBUG seller
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
   const [validLogin, setValidLogin] = useState(false);
   const [loginWarning, setLoginWarning] = useState({});
   const navigate = useNavigate();
