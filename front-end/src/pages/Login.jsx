@@ -4,19 +4,23 @@ import axios from 'axios';
 import UserContext from '../context/UserContext';
 import validateEmail from '../helpers/validateEmail';
 import saveLocalStorage from '../helpers/saveLocalStorage';
+import logo from '../images/logo.svg';
+import eye from '../images/eye.svg';
+import eyeSlash from '../images/eye-slash.svg';
 
 export default function Login() {
   const { setUser } = useContext(UserContext);
-  // const [email, setEmail] = useState('zebirita@email.com'); // DEBUG customer
-  // const [password, setPassword] = useState('$#zebirita#$'); // DEBUG customer
+  const [email, setEmail] = useState('zebirita@email.com'); // DEBUG customer
+  const [password, setPassword] = useState('$#zebirita#$'); // DEBUG customer
   // const [email, setEmail] = useState('fulana@deliveryapp.com'); // DEBUG seller
   // const [password, setPassword] = useState('fulana@123'); // DEBUG seller
   // const [email, setEmail] = useState('adm@deliveryapp.com'); // DEBUG Admin
   // const [password, setPassword] = useState('--adm2@21!!--'); // DEBUG Admin
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
   const [validLogin, setValidLogin] = useState(false);
   const [loginWarning, setLoginWarning] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   // função que faz a validação dos inputs de email e senha e salva no estado
@@ -59,57 +63,75 @@ export default function Login() {
 
   // criar um handle inpu generico
   return (
-    <div>
-      <label htmlFor="login_email">
-        Login
-        <input
-          type="text"
-          data-testid="common_login__input-email"
-          id="login_email"
-          placeholder="email"
-          value={ email }
-          onChange={ ({ target }) => setEmail(target.value) }
-        />
-      </label>
+    <div className="login-page">
+      <img className="login-page-logo" src={ logo } alt="logo" />
+      <form className="login-form">
 
-      <label htmlFor="login_password">
-        Senha
-        <input
-          type="password"
-          data-testid="common_login__input-password"
-          id="login_password"
-          placeholder="Password"
-          value={ password }
-          onChange={ ({ target }) => setPassword(target.value) }
-        />
-      </label>
+        <label htmlFor="login_email">
+          Login
+          <input
+            type="text"
+            data-testid="common_login__input-email"
+            id="login_email"
+            placeholder="seu-email@site.com"
+            value={ email }
+            onChange={ ({ target }) => setEmail(target.value) }
+          />
+        </label>
 
-      <button
-        type="button"
-        disabled={ !validLogin }
-        data-testid="common_login__button-login"
-        onClick={ handleLogin }
-      >
-        Login
-      </button>
+        <label htmlFor="login_password" className="login-password-label">
+          Senha
 
-      <button
-        type="button"
-        data-testid="common_login__button-register"
-      >
-        <Link
-          to="/register"
-        >
-          Ainda não tenho conta
-        </Link>
-      </button>
+          <input
+            type={ showPassword ? 'text' : 'password' }
+            data-testid="common_login__input-password"
+            id="login_password"
+            placeholder={ showPassword ? 'password' : '********' }
+            value={ password }
+            onChange={ ({ target }) => setPassword(target.value) }
+          />
+          <button
+            className="toggle-password-btn"
+            type="button"
+            onClick={ () => setShowPassword((prev) => !prev) }
+          >
+            <img src={ showPassword ? eye : eyeSlash } alt="showpassword" />
+          </button>
 
-      <p
-        className={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
-        data-testid="common_login__element-invalid-email"
-      >
-        {loginWarning.message}
-      </p>
+        </label>
+
+        <div className="login-btn-container">
+          <p
+            className={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
+            data-testid="common_login__element-invalid-email"
+          >
+            {loginWarning.message}
+          </p>
+          <button
+            type="button"
+            className="login-btn"
+            disabled={ !validLogin }
+            data-testid="common_login__button-login"
+            onClick={ handleLogin }
+          >
+            Login
+          </button>
+
+          <button
+            type="button"
+            className="register-btn"
+            data-testid="common_login__button-register"
+          >
+            <Link
+              to="/register"
+            >
+              Ainda não tenho conta
+            </Link>
+          </button>
+
+        </div>
+
+      </form>
     </div>
   );
 }

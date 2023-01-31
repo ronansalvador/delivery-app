@@ -1,3 +1,23 @@
+:root {
+
+  --color-1: #3f3d56;
+
+  --color-2: #ff6584;
+
+  --color-3: #67d0ff;
+
+  --color-4: #000123;
+
+  --font-1: 'Lato' , sans-serif;
+
+  --font-2: 'Montserrat' , sans-serif;
+
+  --font-3: 'Roboto' , sans-serif;
+
+  --font-4: arial;
+
+}
+
 html {
   box-sizing: border-box;
   font-size: 16px;
@@ -5,6 +25,7 @@ html {
 
 *, *:before, *:after {
   box-sizing: inherit;
+  font-family: var(--font-3);
 }
 
 body, h1, h2, h3, h4, h5, h6, p, ol, ul {
