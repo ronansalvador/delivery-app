@@ -5,9 +5,10 @@ import UserContext from '../context/UserContext';
 import validateEmail from '../helpers/validateEmail';
 
 export default function AdminManage() {
-  const [name, setName] = useState('Celso Rodrigo');
-  const [email, setEmail] = useState('exemplo@email.com');
-  const [password, setPassword] = useState('123456');
+  const [loginWarning, setLoginWarning] = useState({});
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [role, setRole] = useState('seller');
   const [validRegister, setValidRegister] = useState(false);
   const { user } = useContext(UserContext);
@@ -26,10 +27,9 @@ export default function AdminManage() {
       const headers = { headers: { authorization: user.token } };
       await axios.post('http://localhost:3001/register/admin', data, headers);
       clearStates();
-      console.log('Usuário cadastrado com sucesso!');
+      setLoginWarning({ message: 'Usuário cadastrado com sucesso!' });
     } catch (error) {
-      console.log(error);
-      console.error(error?.response.data);
+      setLoginWarning(error.response.data);
     }
   };
 
@@ -50,6 +50,12 @@ export default function AdminManage() {
   return (
     <div>
       <Navbar />
+      <p
+        className={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
+        data-testid="admin_manage__element-invalid-register"
+      >
+        {loginWarning.message}
+      </p>
       <form>
         <h2>Cadastrar Novo Usuário</h2>
 
