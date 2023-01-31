@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import validateEmail from '../helpers/validateEmail';
 
 export default function AdminManage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('seller');
+  const [validRegister, setValidRegister] = useState(false);
+
+  const ValidateRegister = () => {
+    const validEmail = validateEmail(email);
+    const FIVE = 5;
+    const ELEVEN = 11;
+
+    setValidRegister(validEmail && password.length > FIVE && name.length > ELEVEN);
+  };
+
+  useEffect(() => {
+    ValidateRegister();
+  }, [name, email, password, role]);
 
   return (
     <div>
@@ -56,6 +70,8 @@ export default function AdminManage() {
             data-testid="admin_manage__select-role"
           >
             <option value="seller">Vendedor</option>
+            <option value="customer">Consumidor</option>
+            <option value="administrator">Administrador</option>
           </select>
         </label>
 
@@ -63,6 +79,7 @@ export default function AdminManage() {
           type="button"
           data-testid="admin_manage__button-register"
           onClick={ () => console.log('WIP') }
+          disabled={ !validRegister }
         >
           CADASTRAR
         </button>
