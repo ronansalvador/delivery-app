@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function NavCustomerProducts() {
   return (
-    <>
+    <div className="navbar-customer">
       {/* <Link
         data-testid="customer_products__element-navbar-link-products"
         to="/customer/products"
@@ -17,6 +17,6 @@ export default function NavCustomerProducts() {
       >
         Pedidos
       </Link>
-    </>
+    </div>
   );
 }

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function NavCustomerProducts() {
   return (
-    <>
+    <div className="navbar-customer">
       <Link
         data-testid="customer_products__element-navbar-link-products"
         className="navbar-product"
@@ -18,6 +18,6 @@ export default function NavCustomerProducts() {
       >
         Meus Pedidos
       </Link>
-    </>
+    </div>
   );
 }
