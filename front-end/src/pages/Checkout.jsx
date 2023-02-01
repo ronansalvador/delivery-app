@@ -59,7 +59,6 @@ export default function Checkout() {
 
   return (
     <div>
-      <h3>Finalizar pedido</h3>
       <Navbar />
       { cart.map((item, index) => (<CheckoutItem
         key={ `${item.id}-checkout` }

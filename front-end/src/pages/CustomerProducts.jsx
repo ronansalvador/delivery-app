@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import CartContext from '../context/CartContext';
 import ProductCard from '../components/ProductCard';
 import UserContext from '../context/UserContext';
+import motorcycle from '../images/motorcycle.svg';
 
 export default function CustomerProducts() {
   const [loading, setLoading] = useState(true);
@@ -36,25 +37,28 @@ export default function CustomerProducts() {
               key={ product.id }
               productDetails={ product }
             />)))}
+        <div className="cart-btn-container">
+          <button
+            type="button"
+            data-testid="customer_products__button-cart"
+            className="cart-btn"
+            disabled={ !totalCartValue }
+            onClick={ handleCheckout }
+          >
+            <img src={ motorcycle } alt="carrinho" />
+            {!totalCartValue
+              ? <p />
+              : (
+                <p data-testid="customer_products__checkout-bottom-value">
+                  {'R$ '}
 
-        <button
-          type="button"
-          data-testid="customer_products__button-cart"
-          className="cart-btn"
-          disabled={ !totalCartValue }
-          onClick={ handleCheckout }
-        >
-          {!totalCartValue
-            ? <p>Carrinho vazio</p>
-            : (
-              <p data-testid="customer_products__checkout-bottom-value">
-                {'Ver carrinho: R$ '}
-                <span>
-                  {totalCartValue.toFixed(2).toString().replace('.', ',')}
-                </span>
-              </p>)}
+                  <span>
+                    {totalCartValue.toFixed(2).toString().replace('.', ',')}
+                  </span>
+                </p>)}
 
-        </button>
+          </button>
+        </div>
       </div>
     </>
   );
