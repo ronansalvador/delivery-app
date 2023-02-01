@@ -31,22 +31,31 @@ export default function OrderCard({ orderDetails }) {
       onClick={ goToOrderDetails }
       className="order-card"
     >
-      <p data-testid={ `${currentRole}_orders__element-order-id-${id}` }>
-        {`pedido: ${id}`}
+      <p
+        data-testid={ `${currentRole}_orders__element-order-id-${id}` }
+        className="index"
+      >
+        {`Pedido 0${id}`}
       </p>
-      <p data-testid={ `${currentRole}_orders__element-delivery-status-${id}` }>
-        {status}
-      </p>
-      <div>
+      <div className="order-card-inner">
+        <p
+          data-testid={ `${currentRole}_orders__element-delivery-status-${id}` }
+          className={ status.toLowerCase() }
+        >
+          {status}
+        </p>
         <p data-testid={ `${currentRole}_orders__element-order-date-${id}` }>
           {moment(saleDate).format('DD/MM/YYYY')}
         </p>
-        <p data-testid={ `${currentRole}_orders__element-card-price-${id}` }>
-          {Number(totalPrice).toFixed(2).toString().replace('.', ',')}
+        <p>
+          {'R$ '}
+          <span data-testid={ `${currentRole}_orders__element-card-price-${id}` }>
+            {Number(totalPrice).toFixed(2).toString().replace('.', ',')}
+          </span>
         </p>
+        { currentRole === 'seller'
+        && <p>{ `${deliveryAddress}, ${deliveryNumber} ` }</p> }
       </div>
-      { currentRole === 'seller'
-      && <p>{ `${deliveryAddress}, ${deliveryNumber} ` }</p> }
     </button>
   );
 }

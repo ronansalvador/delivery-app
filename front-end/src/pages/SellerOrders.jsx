@@ -11,10 +11,15 @@ export default function CustomerOrders() {
   return (
     <div>
       <Navbar />
-      { sales.map((order) => (<OrderCard
-        key={ order.id }
-        orderDetails={ order }
-      />)) }
+      <div className="page-order-card">
+        { sales.map((order) => (
+          <div className="order-card-container" key={ order.id }>
+            <OrderCard
+              orderDetails={ order }
+            />
+          </div>
+        )) }
+      </div>
     </div>
   );
 }
