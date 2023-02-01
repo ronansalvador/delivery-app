@@ -13,7 +13,7 @@ export default function CustomerOrdersDetails() {
   const { saleId, seller } = state;
   const [currSale, setCurrSale] = useState({});
   const [index, setIndex] = useState(0);
-  const { sales, user, setSales } = useContext(UserContext);
+  const { sales, user, getSales } = useContext(UserContext);
 
   // Salvo conteúdo do data-testid em constante para evitar erros de lint
   const SELLER_ID = 'customer_order_details__element-order-details-label-seller-name';
@@ -41,13 +41,13 @@ export default function CustomerOrdersDetails() {
     try {
       const data = { status };
       const headers = { headers: { authorization: user.token } };
-      const response = await axios.put('http://localhost:3001/sales/update', data, headers);
-      setSales(response.data);
+      const response = await axios.put(`http://localhost:3001/sales/status/${currSale.id}`, data, headers);
+      console.log(response.data);
+      getSales();
     } catch (error) {
       const unauthorizedCode = 401;
       if (error.response.status === unauthorizedCode) return handleLogout();
     }
-    setLoading(false);
   };
 
   return (

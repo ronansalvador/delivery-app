@@ -38,7 +38,7 @@ const saleByUpdateStatus = async ({ id, status }) => {
 
   const statusSale = {
     pendente: 'Preparando',
-    preparando: 'Em Transito',
+    preparando: 'Em Trânsito',
     emTransito: 'Entregue',
   };
 
