@@ -12,6 +12,7 @@ export default function NavCustomerProducts() {
       </Link> */}
       <Link
         data-testid="customer_products__element-navbar-link-orders"
+        className="navbar-pedidos"
         to="/seller/orders"
       >
         Pedidos

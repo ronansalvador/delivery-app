@@ -9,14 +9,20 @@ export default function Navbar() {
   const { role, name } = user;
 
   return (
-    <nav>
+    <nav className="navbar">
       {role === 'customer' && <NavCustomerProducts />}
       {role === 'seller' && <NavSellerOrder />}
       {role === 'administrator' && <NavAdminManage />}
-      <p data-testid="customer_products__element-navbar-user-full-name">{`${name}`}</p>
+      <p
+        className="navbar-name"
+        data-testid="customer_products__element-navbar-user-full-name"
+      >
+        {`${name}`}
+      </p>
       <button
         data-testid="customer_products__element-navbar-link-logout"
         type="button"
+        className="navbar-logout"
         onClick={ handleLogout }
       >
         Sair
