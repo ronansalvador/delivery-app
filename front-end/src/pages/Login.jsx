@@ -10,14 +10,14 @@ import eyeSlash from '../images/eye-slash.svg';
 
 export default function Login() {
   const { setUser } = useContext(UserContext);
-  const [email, setEmail] = useState('zebirita@email.com'); // DEBUG customer
-  const [password, setPassword] = useState('$#zebirita#$'); // DEBUG customer
+  // const [email, setEmail] = useState('zebirita@email.com'); // DEBUG customer
+  // const [password, setPassword] = useState('$#zebirita#$'); // DEBUG customer
   // const [email, setEmail] = useState('fulana@deliveryapp.com'); // DEBUG seller
   // const [password, setPassword] = useState('fulana@123'); // DEBUG seller
   // const [email, setEmail] = useState('adm@deliveryapp.com'); // DEBUG Admin
   // const [password, setPassword] = useState('--adm2@21!!--'); // DEBUG Admin
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [validLogin, setValidLogin] = useState(false);
   const [loginWarning, setLoginWarning] = useState({});
   const [showPassword, setShowPassword] = useState(false);

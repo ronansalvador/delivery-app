@@ -5,7 +5,7 @@ const keySecret = fs.readFileSync('jwt.evaluation.key');
 
 const newToken = (data) => {
   const token = jwt.sign({ data }, keySecret, {
-      expiresIn: '15d',
+      expiresIn: '7d',
       algorithm: 'HS256',
   });
   return token;

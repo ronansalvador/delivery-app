@@ -12,8 +12,8 @@ export default function ButtonOrdersDetails({ status, updateStatus }) {
         <button
           type="button"
           data-testid="customer_order_details__button-delivery-check"
-          disabled={ (status === /Em Transito/i) }
-          onClick={ () => updateStatus(status) }
+          disabled={ (status !== 'Em Trânsito') }
+          onClick={ () => updateStatus('emTransito') }
         >
           Marcar Como Entregue
         </button>)}
@@ -22,18 +22,18 @@ export default function ButtonOrdersDetails({ status, updateStatus }) {
           <button
             type="button"
             data-testid="seller_order_details__button-preparing-check"
-            disabled={ (status !== /pendente/i) }
+            disabled={ (status !== 'Pendente') }
             // click deve mudar o status para Preparando
-            onClick={ () => updateStatus(status) }
+            onClick={ () => updateStatus('pendente') }
           >
             Preparar Pedido
           </button>
           <button
             type="button"
             data-testid="seller_order_details__button-dispatch-check"
-            disabled={ (status === /Preparando/i) }
+            disabled={ (status !== 'Preparando') }
             // click deve mudar o status para Em Trânsito
-            onClick={ () => updateStatus(status) }
+            onClick={ () => updateStatus('preparando') }
           >
             Saiu para entrega
           </button>

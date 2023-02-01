@@ -19,19 +19,18 @@ function UserProvider({ children }) {
   };
 
   // Faz GET no back-end para receber lista de vendas referentes ao usuário e salva no estado
+  const getSales = async () => {
+    if (user === null) return;
+    try {
+      const headers = { headers: { authorization: user.token } };
+      const response = await axios.get(`http://localhost:3001/sales/${user.role}/${user.id}`, headers);
+      setSales(response.data);
+    } catch (error) {
+      const unauthorizedCode = 401;
+      if (error.response.status === unauthorizedCode) return handleLogout();
+    }
+  };
   useEffect(() => {
-    const getSales = async () => {
-      if (user === null) return;
-      try {
-        const headers = { headers: { authorization: user.token } };
-        const response = await axios.get(`http://localhost:3001/sales/${user.role}/${user.id}`, headers);
-        setSales(response.data);
-      } catch (error) {
-        const unauthorizedCode = 401;
-        if (error.response.status === unauthorizedCode) return handleLogout();
-      }
-    };
-
     getSales();
   }, [user]);
 
@@ -79,6 +78,7 @@ function UserProvider({ children }) {
     setUser,
     handleLogout,
     setSales,
+    getSales,
   }), [user, sales, sellers, products]);
 
   return (
