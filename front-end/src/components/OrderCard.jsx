@@ -29,6 +29,7 @@ export default function OrderCard({ orderDetails }) {
     <button
       type="button"
       onClick={ goToOrderDetails }
+      className="order-card"
     >
       <p data-testid={ `${currentRole}_orders__element-order-id-${id}` }>
         {`pedido: ${id}`}
