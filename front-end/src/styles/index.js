@@ -6,3 +6,4 @@ import './Orders.css';
 import './Checkout.css';
 import './OrderDetails.css';
 import './AdminManage.css';
+import './Register.css';

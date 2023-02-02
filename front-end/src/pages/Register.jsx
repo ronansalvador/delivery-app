@@ -4,6 +4,7 @@ import axios from 'axios';
 import UserContext from '../context/UserContext';
 import validateEmail from '../helpers/validateEmail';
 import saveLocalStorage from '../helpers/saveLocalStorage';
+import havingFun from '../images/having_fun.svg';
 
 export default function Register() {
   const { setUser } = useContext(UserContext);
@@ -44,9 +45,9 @@ export default function Register() {
   }, [name, email, password]);
 
   return (
-    <div>
-      <h1>Cadastro</h1>
-      <form>
+    <div className="register-page">
+      <img className="login-page-logo" src={ havingFun } alt="logo" />
+      <form className="login-form">
         <label htmlFor="register_name">
           <input
             type="text"
@@ -80,21 +81,25 @@ export default function Register() {
           />
         </label>
 
-        <button
-          type="button"
-          disabled={ !validLogin }
-          data-testid="common_register__button-register"
-          onClick={ handleRegister }
-        >
-          CADASTRAR
-        </button>
+        <div className="login-btn-container">
+          <button
+            type="button"
+            disabled={ !validLogin }
+            className="register-button"
+            data-testid="common_register__button-register"
+            onClick={ handleRegister }
+          >
+            CADASTRAR
+          </button>
 
-        <p
-          className={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
-          data-testid="common_register__element-invalid_register"
-        >
-          {loginWarning.message}
-        </p>
+          <p
+            className={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
+            data-testid="common_register__element-invalid_register"
+          >
+            {loginWarning.message}
+          </p>
+
+        </div>
       </form>
     </div>
   );
