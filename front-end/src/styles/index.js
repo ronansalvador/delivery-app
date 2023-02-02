@@ -5,3 +5,4 @@ import './NavBar.css';
 import './Orders.css';
 import './Checkout.css';
 import './OrderDetails.css';
+import './AdminManage.css';

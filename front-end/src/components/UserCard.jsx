@@ -5,8 +5,9 @@ export default function UserCard({ userDetails, index, deleteUser }) {
   const { id, name, email, role } = userDetails;
 
   return (
-    <div>
+    <div className="user-card">
       <p
+        className="index"
         data-testid={ `admin_manage__element-user-table-item-number-${index}` }
       >
         {index + 1}
@@ -32,6 +33,7 @@ export default function UserCard({ userDetails, index, deleteUser }) {
 
       <button
         type="button"
+        className="user-btn-remove"
         data-testid={ `admin_manage__element-user-table-remove-${index}` }
         onClick={ () => deleteUser(id) }
       >

@@ -83,16 +83,16 @@ export default function AdminManage() {
   }, []);
 
   return (
-    <div>
+    <div className="admin-page">
       <Navbar />
+      <h3>Cadastrar Novo Usuário</h3>
       <p
         className={ `login-error ${!('message' in loginWarning) && 'hidden'}` }
         data-testid="admin_manage__element-invalid-register"
       >
         {loginWarning.message}
       </p>
-      <form>
-        <h2>Cadastrar Novo Usuário</h2>
+      <form className="admin-form">
 
         <label htmlFor="admin_name">
           Nome
@@ -147,13 +147,14 @@ export default function AdminManage() {
         <button
           type="button"
           data-testid="admin_manage__button-register"
+          className="btn-cadastrar"
           onClick={ handleRegister }
           disabled={ !validRegister }
         >
           CADASTRAR
         </button>
       </form>
-      <div>
+      <div className="admin-users-container">
         {users.length > 0 && users.map((currUser, index) => (
           <UserCard
             userDetails={ currUser }

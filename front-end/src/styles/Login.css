@@ -103,6 +103,8 @@
 }
 
 .login-error {
+
+  /* background-color: red; */
   color: var(--color-2);
   height: 1rem;
   text-align: center;
