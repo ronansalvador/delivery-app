@@ -58,77 +58,116 @@ export default function Checkout() {
   }, [sellers]);
 
   return (
-    <div>
+    <>
       <Navbar />
-      { cart.map((item, index) => (<CheckoutItem
-        key={ `${item.id}-checkout` }
-        index={ index }
-        itemDetails={ item }
-        pageTestId="customer_checkout"
-      />)) }
-      <h3>
-        {'R$ '}
-        <span
-          data-testid="customer_checkout__element-order-total-price"
-        >
-          {totalCartValue.toFixed(2).replace('.', ',')}
-        </span>
-      </h3>
-      {loading
-        ? <h1>Loading...</h1>
-        : (
-          <form>
-            <h3>Detalhes e Endereço de entrega</h3>
-            <label htmlFor="seller_name">
-              P. Vendedora Responsável:
-              <select
-                name="sellers"
-                id="seller_name"
-                data-testid="customer_checkout__select-seller"
-                onChange={ ({ target }) => setSeller(Number(target.value)) }
-                value={ seller }
-              >
-                {sellers.length > 0 && sellers.map((currSeller) => (
-                  <option
-                    key={ currSeller.id }
-                    value={ currSeller.id }
-                  >
-                    {currSeller.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label htmlFor="order_address">
-              Endereço
-              <input
-                type="text"
-                id="order_address"
-                min="0"
-                data-testid="customer_checkout__input-address"
-                onChange={ ({ target }) => setDeliveryAddress(target.value) }
-                value={ deliveryAddress }
-              />
-            </label>
-            <label htmlFor="order_address_number">
-              Número
-              <input
-                type="number"
-                id="order_address_number"
-                data-testid="customer_checkout__input-address-number"
-                onChange={ ({ target }) => setDeliveryNumber(target.value) }
-                value={ deliveryNumber }
-              />
-            </label>
-            <button
-              type="button"
-              data-testid="customer_checkout__button-submit-order"
-              onClick={ handleCheckout }
-              disabled={ deliveryAddress === '' || deliveryNumber === '' || !cart.length }
+      <div className="checkout-page">
+        <div className="checkout-card-container">
+          <div className="checkout-item">
+            <p
+              className="checkout-item-index"
             >
-              FINALIZAR PEDIDO
-            </button>
-          </form>
-        )}
-    </div>
+              Item
+            </p>
+            <p
+              className="item-name"
+            >
+              Descrição
+            </p>
+            <p
+              className="checkout-item-quantity"
+            >
+              Quantidade
+            </p>
+            <p className="checkout-item-price">
+              Valor
+            </p>
+            <p className="checkout-item-total">
+              Sub-total
+            </p>
+            <p
+              className="btn-remove"
+            >
+              Remover
+            </p>
+
+          </div>
+          { cart.map((item, index) => (<CheckoutItem
+            key={ `${item.id}-checkout` }
+            index={ index }
+            itemDetails={ item }
+            pageTestId="customer_checkout"
+          />)) }
+        </div>
+        <div className="checkout-datails">
+          {loading
+            ? <h1>Loading...</h1>
+            : (
+              <form className="checkout-form">
+                <h3 className="checkout-title-details">Detalhes e Endereço de entrega</h3>
+                <label htmlFor="order_address">
+                  Endereço
+                  <input
+                    type="text"
+                    id="order_address"
+                    min="0"
+                    data-testid="customer_checkout__input-address"
+                    onChange={ ({ target }) => setDeliveryAddress(target.value) }
+                    value={ deliveryAddress }
+                  />
+                </label>
+                <label htmlFor="order_address_number">
+                  Número
+                  <input
+                    type="number"
+                    id="order_address_number"
+                    data-testid="customer_checkout__input-address-number"
+                    onChange={ ({ target }) => setDeliveryNumber(target.value) }
+                    value={ deliveryNumber }
+                  />
+                </label>
+                <label htmlFor="seller_name">
+                  P. Vendedora Responsável:
+                  <select
+                    name="sellers"
+                    id="seller_name"
+                    data-testid="customer_checkout__select-seller"
+                    onChange={ ({ target }) => setSeller(Number(target.value)) }
+                    value={ seller }
+                  >
+                    {sellers.length > 0 && sellers.map((currSeller) => (
+                      <option
+                        key={ currSeller.id }
+                        value={ currSeller.id }
+                      >
+                        {currSeller.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </form>
+            )}
+          <h3 className="checkout-datails-total">
+            {'Total R$ '}
+            <span
+              data-testid="customer_checkout__element-order-total-price"
+            >
+              {totalCartValue.toFixed(2).replace('.', ',')}
+            </span>
+          </h3>
+        </div>
+        <div className="checkout-btn-container">
+          <button
+            type="button"
+            data-testid="customer_checkout__button-submit-order"
+            className="checkout-btn"
+            onClick={ handleCheckout }
+            disabled={ deliveryAddress === ''
+                  || deliveryNumber === '' || !cart.length }
+          >
+            FINALIZAR PEDIDO
+          </button>
+        </div>
+      </div>
+    </>
   );
 }

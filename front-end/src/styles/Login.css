@@ -31,6 +31,7 @@
 }
 
 .login-form label input {
+  background-color: transparent;
   border: none;
   border-bottom: 1px solid black;
   outline: none;

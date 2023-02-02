@@ -18,6 +18,7 @@ export default function OrderCard({ orderDetails }) {
   const { sellers, user } = useContext(UserContext);
   const currentRole = user.role;
   const navigate = useNavigate();
+  const NOVE = 9;
 
   // direcionar de acordo com a role
   const goToOrderDetails = () => {
@@ -25,6 +26,20 @@ export default function OrderCard({ orderDetails }) {
     navigate(`/${user.role}/orders/${id}`, { state: { saleId: id, seller } });
   };
 
+  const statusCss = () => {
+    switch (status) {
+    case 'Pendente':
+      return 'pendente';
+    case 'Preparando':
+      return 'preparando';
+    case 'Em Trânsito':
+      return 'em-transito';
+    case 'Entregue':
+      return 'entregue';
+    default:
+      return '';
+    }
+  };
   return (
     <button
       type="button"
@@ -35,15 +50,15 @@ export default function OrderCard({ orderDetails }) {
         data-testid={ `${currentRole}_orders__element-order-id-${id}` }
         className="index"
       >
-        {`Pedido 0${id}`}
+        {id < NOVE ? `Pedido 0${id}` : `Pedido ${id}`}
+      </p>
+      <p
+        data-testid={ `${currentRole}_orders__element-delivery-status-${id}` }
+        className={ `card-status ${statusCss()}` }
+      >
+        {status}
       </p>
       <div className="order-card-inner">
-        <p
-          data-testid={ `${currentRole}_orders__element-delivery-status-${id}` }
-          className={ status.toLowerCase() }
-        >
-          {status}
-        </p>
         <p data-testid={ `${currentRole}_orders__element-order-date-${id}` }>
           {moment(saleDate).format('DD/MM/YYYY')}
         </p>

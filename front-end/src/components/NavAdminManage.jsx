@@ -6,7 +6,7 @@ export default function NavAdminManage() {
     <div className="navbar-customer">
       <Link
         data-testid="customer_products__element-navbar-link-products"
-        to="/customer/products"
+        to="/admin/manage"
       >
         Gerenciar Usuários
       </Link>

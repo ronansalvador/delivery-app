@@ -16,23 +16,26 @@ export default function CheckoutItem(props) {
   };
 
   return (
-    <div>
+    <div className="checkout-item">
       <p
+        className="checkout-item-index"
         data-testid={ `${pageTestId}__element-order-table-item-number-${index}` }
       >
         {index + 1}
       </p>
       <p
+        className="checkout-item-name"
         data-testid={ `${pageTestId}__element-order-table-name-${index}` }
       >
         {name}
       </p>
       <p
+        className="checkout-item-quantity"
         data-testid={ `${pageTestId}__element-order-table-quantity-${index}` }
       >
         {quantity}
       </p>
-      <p>
+      <p className="checkout-item-price">
         {'R$ '}
         <span
           data-testid={
@@ -42,7 +45,7 @@ export default function CheckoutItem(props) {
           {Number(price).toFixed(2).replace('.', ',')}
         </span>
       </p>
-      <p>
+      <p className="checkout-item-total">
         {'R$ '}
         <span
           data-testid={ `${pageTestId}__element-order-table-sub-total-${index}` }
@@ -53,6 +56,7 @@ export default function CheckoutItem(props) {
       { pageTestId === 'customer_checkout' && (
         <button
           type="button"
+          className="checkout-btn-remove"
           data-testid={ `${pageTestId}__element-order-table-remove-${index}` }
           onClick={ removeItem }
         >
