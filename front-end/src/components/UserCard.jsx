@@ -7,32 +7,32 @@ export default function UserCard({ userDetails, index, deleteUser }) {
   return (
     <div>
       <p
-        data-testid={ `admin_manage__element-user-table-item-number-${'<index>'}` }
+        data-testid={ `admin_manage__element-user-table-item-number-${index}` }
       >
         {index + 1}
       </p>
 
       <p
-        data-testid="admin_manage__input-email"
+        data-testid={ `admin_manage__element-user-table-name-${index}` }
       >
         {name}
       </p>
 
       <p
-        data-testid={ `admin_manage__element-user-table-email-${'<index>'}` }
+        data-testid={ `admin_manage__element-user-table-email-${index}` }
       >
         {email}
       </p>
 
       <p
-        data-testid={ `admin_manage__element-user-table-role-${'<index>'}` }
+        data-testid={ `admin_manage__element-user-table-role-${index}` }
       >
         {role}
       </p>
 
       <button
         type="button"
-        data-testid={ `admin_manage__element-user-table-remove-${'<index>'}` }
+        data-testid={ `admin_manage__element-user-table-remove-${index}` }
         onClick={ () => deleteUser(id) }
       >
         Excluir
@@ -43,7 +43,7 @@ export default function UserCard({ userDetails, index, deleteUser }) {
 
 UserCard.propTypes = {
   userDetails: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     name: PropTypes.string,
     email: PropTypes.string,
     role: PropTypes.string,
