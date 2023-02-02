@@ -43,13 +43,8 @@ export default function Login() {
       await setUser(response.data);
       // Redireciona de acordo com a role
       saveLocalStorage('user', response.data);
-      // console.log('role login', response.data.role);
-      // console.log('user role', user.role);
       if (response.data.role === 'customer') return navigate('/customer/products');
-      if (response.data.role === 'seller') {
-        console.log('entrou no if se seller');
-        return navigate('/seller/orders');
-      }
+      if (response.data.role === 'seller') { return navigate('/seller/orders'); }
       navigate('/admin/manage');
     } catch (error) {
       setLoginWarning(error.response.data);

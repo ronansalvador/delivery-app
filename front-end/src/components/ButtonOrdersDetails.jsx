@@ -4,8 +4,6 @@ import UserContext from '../context/UserContext';
 
 export default function ButtonOrdersDetails({ status, updateStatus }) {
   const { user } = useContext(UserContext);
-  console.log(status);
-  console.log(user.role);
   return (
     <div>
       {(user.role === 'customer') && (

@@ -20,7 +20,7 @@ function UserProvider({ children }) {
 
   // Faz GET no back-end para receber lista de vendas referentes ao usuário e salva no estado
   const getSales = async () => {
-    if (user === null) return;
+    if (user === null || user.role === 'administrator') return;
     try {
       const headers = { headers: { authorization: user.token } };
       const response = await axios.get(`http://localhost:3001/sales/${user.role}/${user.id}`, headers);
@@ -37,7 +37,7 @@ function UserProvider({ children }) {
   // Faz GET no back-end para receber lista de pessoas vendedoras e salva no estado
   useEffect(() => {
     const getSellers = async () => {
-      if (user === null) return;
+      if (user?.role !== 'customer') return;
       try {
         const headers = { headers: { authorization: user.token } };
         const allSellers = await axios.get('http://localhost:3001/seller', headers);
@@ -55,7 +55,7 @@ function UserProvider({ children }) {
   // Faz GET no back-end para receber produtos
   useEffect(() => {
     const getAllProducts = async () => {
-      if (user === null) return;
+      if (user?.role !== 'customer') return;
       try {
         const headers = { headers: { authorization: user.token } };
         const allProducts = await axios.get('http://localhost:3001/products', headers);

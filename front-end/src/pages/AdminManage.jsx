@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 import UserCard from '../components/UserCard';
 import UserContext from '../context/UserContext';
 import validateEmail from '../helpers/validateEmail';
-import usersMock from '../mocks/usersMock';
 
 export default function AdminManage() {
   const [users, setUsers] = useState([]);
@@ -15,6 +14,19 @@ export default function AdminManage() {
   const [role, setRole] = useState('seller');
   const [validRegister, setValidRegister] = useState(false);
   const { user } = useContext(UserContext);
+
+  // Faz GET no back-end para receber lista de usuários e remove o usuário atual
+  const loadUsers = async () => {
+    try {
+      const headers = { headers: { authorization: user.token } };
+      const newUsers = await axios.get('http://localhost:3001/admin', headers);
+      const otherUsers = newUsers.data.filter((currUser) => (currUser.id !== user.id));
+      setUsers(otherUsers);
+    } catch (error) {
+      const unauthorizedCode = 401;
+      if (error.response.status === unauthorizedCode) return handleLogout();
+    }
+  };
 
   // Limpa os campos de Nome, Email e Senha
   const clearStates = () => {
@@ -28,26 +40,29 @@ export default function AdminManage() {
     const data = { name, email, password, role };
     try {
       const headers = { headers: { authorization: user.token } };
-      await axios.post('http://localhost:3001/register/admin', data, headers);
+      await axios.post('http://localhost:3001/admin', data, headers);
       clearStates();
       setLoginWarning({ message: 'Usuário cadastrado com sucesso!' });
+      loadUsers();
     } catch (error) {
+      console.log(error);
       setLoginWarning(error.response.data);
     }
   };
 
+  // Faz DELETE no back-end para remover usuário
   const deleteUser = async (id) => {
     try {
-      // const headers = { headers: { authorization: user.token } };
-      // Combinar rota e validação de role com back-end
-      // const allSellers = await axios.get(`http://localhost:3001/admin/delete/${id}`, headers);
-      const newUserList = users.filter((currUser) => currUser.id !== id);
-      setUsers(newUserList);
+      const headers = { headers: { authorization: user.token } };
+      await axios.delete(`http://localhost:3001/admin/${id}`, headers);
+      loadUsers();
     } catch (error) {
+      console.log(error);
       const unauthorizedCode = 401;
       if (error.response.status === unauthorizedCode) return handleLogout();
     }
   };
+
   // Valida os camois
   const ValidateRegister = () => {
     const validEmail = validateEmail(email);
@@ -62,14 +77,8 @@ export default function AdminManage() {
     ValidateRegister();
   }, [name, email, password, role]);
 
+  // Chama função de carregar usuários quando a página é carregada
   useEffect(() => {
-    const loadUsers = () => {
-      const mockAxios = usersMock;
-      const filteredUsers = mockAxios.filter((responseUser) => (
-        Number(responseUser.id) !== user.id));
-      setUsers(filteredUsers);
-    };
-
     loadUsers();
   }, []);
 
