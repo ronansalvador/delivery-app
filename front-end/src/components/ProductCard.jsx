@@ -53,12 +53,7 @@ export default function ProductCard({ productDetails }) {
   }, []);
 
   return (
-    <div>
-      <p
-        data-testid={ `customer_products__element-card-price-${id}` }
-      >
-        {(Number(price).toFixed(2).toString()).replace('.', ',')}
-      </p>
+    <div className="product-card">
       <img
         data-testid={ `customer_products__img-card-bg-image-${id}` }
         className="product-card-image"
@@ -66,27 +61,39 @@ export default function ProductCard({ productDetails }) {
         alt={ name }
       />
       <p data-testid={ `customer_products__element-card-title-${id}` }>{name}</p>
-      <button
-        data-testid={ `customer_products__button-card-rm-item-${id}` }
-        type="button"
-        onClick={ removeProducts }
-      >
-        -
-      </button>
-      <input
-        type="number"
-        value={ quantity }
-        min="0"
-        onChange={ ({ target }) => setQuantity(Number(target.value)) }
-        data-testid={ `customer_products__input-card-quantity-${id}` }
-      />
-      <button
-        data-testid={ `customer_products__button-card-add-item-${id}` }
-        type="button"
-        onClick={ addProducts }
-      >
-        +
-      </button>
+      <p>
+        {'R$ '}
+        <span data-testid={ `customer_products__element-card-price-${id}` }>
+          {(Number(price).toFixed(2).toString()).replace('.', ',')}
+        </span>
+
+      </p>
+      <div className="product-card-buttons">
+
+        <button
+          data-testid={ `customer_products__button-card-rm-item-${id}` }
+          type="button"
+          className="minus-btn"
+          onClick={ removeProducts }
+        >
+          -
+        </button>
+        <input
+          type="number"
+          value={ quantity }
+          min="0"
+          onChange={ ({ target }) => setQuantity(Number(target.value)) }
+          data-testid={ `customer_products__input-card-quantity-${id}` }
+        />
+        <button
+          data-testid={ `customer_products__button-card-add-item-${id}` }
+          className="plus-btn"
+          type="button"
+          onClick={ addProducts }
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 }

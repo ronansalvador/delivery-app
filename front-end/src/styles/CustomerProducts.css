@@ -1,5 +1,130 @@
 .cart-btn {
-  bottom: 20px;
-  position: fixed;
-  right: 30px;
+  align-items: center;
+  background-color: var(--color-1);
+  border: 1px solid var(--color-3);
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%) , 0 1px 3px rgb(0 0 0 / 10%);
+  color: var(--color-3);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  font-weight: 600;
+  gap: 5px;
+  height: fit-content;
+  justify-content: center;
+  padding: 10px;
+  transition: 0.3s;
+  width: 100px;
 }
+
+.cart-btn p {
+  max-width: 90%;
+  word-wrap: break-word;
+}
+
+.cart-btn:disabled {
+  background-color: transparent;
+  border-color: var(--color-3);
+  color: var(--color-3);
+  cursor: not-allowed;
+  height: 70px;
+  width: 70px;
+}
+
+.cart-btn:enabled {
+  min-height: 100px;
+}
+
+.cart-btn:enabled:hover {
+  scale: 1.1;
+}
+
+.cart-btn img {
+  width: 50px;
+}
+
+.customer-products-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: start;
+  margin: auto;
+  padding: 30px 10px;
+  width: 85%;
+}
+
+.product-card {
+  align-items: center;
+  background-color: white;
+  border: 1px solid #e1e5eb;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%) , 0 1px 3px rgb(0 0 0 / 10%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 300px;
+  justify-content: space-around;
+  margin: 10px;
+  padding: 10px;
+  width: 220px;
+}
+
+
+.product-card-image {
+  height: 150px;
+}
+
+.product-card-buttons {
+  align-items: baseline;
+  display: flex;
+}
+
+.product-card-buttons input {
+  border: 1px solid var(--color-1);
+  border-radius: 0;
+  height: 20px;
+  text-align: center;
+  width: 50px;
+}
+
+.product-card-buttons input::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.product-card-buttons input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.minus-btn {
+  background-color: var(--color-1);
+  border: none;
+  border-radius: 5px 0 0 5px;
+  color: white;
+  font-weight: 800;
+  height: 20px;
+  width: 20px;
+}
+
+.plus-btn {
+  background-color: var(--color-1);
+  border: none;
+  border-radius: 0 5px 5px 0;
+  color: white;
+  height: 20px;
+  width: 20px;
+}
+
+.cart-btn-container {
+  align-items: center;
+  bottom: 100px;
+  display: flex;
+  height: 120px;
+  justify-content: center;
+  position: fixed;
+  right: 70px;
+  width: 120px;
+}
+

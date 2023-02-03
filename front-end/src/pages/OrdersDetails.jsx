@@ -50,60 +50,92 @@ export default function CustomerOrdersDetails() {
   };
 
   return (
-    <div>
+    <>
       <Navbar />
-      { loading
-        ? <h1>Loading...</h1>
-        : (
-          <>
-            <h2>Detalhes do Pedido</h2>
-            <p
-              data-testid={ `${user.role}${ORDER_ID}` }
-            >
-              {currSale.id}
-            </p>
-            {/* somente para customer */}
-            {(user.role === 'customer') && (
-              <p
-                data-testid={ SELLER_ID }
-              >
-                {seller.name || 'Fulana Pereira'}
-              </p>
-            )}
-            <p
-              data-testid={ `${user.role}${DATE_ID}` }
-            >
-              {moment(currSale.saleDate).format('DD/MM/YYYY')}
-            </p>
-            <p
-              data-testid={ `${user.role}${STATUS_ID}${index}` }
-            >
-              {currSale.status}
-            </p>
-            {/* somente para customer */}
-            <ButtonOrdersDetails
-              status={ currSale.status }
-              updateStatus={ updateStatus }
-            />
-            {currSale.cart && currSale.cart.map((item, itemIndex) => (
-              <CheckoutItem
-                key={ `${itemIndex}-order_details` }
-                index={ itemIndex }
-                itemDetails={ item }
-                pageTestId={ `${user.role}_order_details` }
-              />))}
-            <p>
-              {'Total: R$ '}
-              <span
-                data-testid={ `${user.role}_order_details__element-order-total-price` }
-              >
-                {currSale.totalPrice
+      <div className="details-page">
+        { loading
+          ? <h1>Loading...</h1>
+          : (
+            <div className="details-details">
+              <div className="detials-description">
+                <p
+                  data-testid={ `${user.role}${ORDER_ID}` }
+                >
+
+                  {currSale.id < +'9'
+                    ? `Pedido: 0${currSale.id}` : `Pedido: ${currSale.id}`}
+
+                </p>
+                {/* somente para customer */}
+                {(user.role === 'customer') && (
+                  <p
+                    data-testid={ SELLER_ID }
+                  >
+                    {`Vend: ${seller.name}`}
+                  </p>
+                )}
+                <p
+                  data-testid={ `${user.role}${DATE_ID}` }
+                >
+                  {moment(currSale.saleDate).format('DD/MM/YYYY')}
+                </p>
+                <p
+                  data-testid={ `${user.role}${STATUS_ID}${index}` }
+                >
+                  {currSale.status}
+                </p>
+                {/* somente para customer */}
+                <ButtonOrdersDetails
+                  status={ currSale.status }
+                  updateStatus={ updateStatus }
+                />
+              </div>
+              <div className="checkout-card-container">
+                <div className="checkout-item">
+                  <p
+                    className="checkout-item-index"
+                  >
+                    Item
+                  </p>
+                  <p
+                    className="item-name"
+                  >
+                    Descrição
+                  </p>
+                  <p
+                    className="checkout-item-quantity"
+                  >
+                    Quantidade
+                  </p>
+                  <p className="checkout-item-price">
+                    Valor
+                  </p>
+                  <p className="checkout-item-total">
+                    Sub-total
+                  </p>
+
+                </div>
+                {currSale.cart && currSale.cart.map((item, itemIndex) => (
+                  <CheckoutItem
+                    key={ `${itemIndex}-order_details` }
+                    index={ itemIndex }
+                    itemDetails={ item }
+                    pageTestId={ `${user.role}_order_details` }
+                  />))}
+              </div>
+              <p className="details-total">
+                {'Total: R$ '}
+                <span
+                  data-testid={ `${user.role}_order_details__element-order-total-price` }
+                >
+                  {currSale.totalPrice
                   && Number(currSale.totalPrice).toFixed(2).replace('.', ',')}
-              </span>
-            </p>
-          </>
-        ) }
-    </div>
+                </span>
+              </p>
+            </div>
+          ) }
+      </div>
+    </>
 
   );
 }

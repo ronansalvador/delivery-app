@@ -18,6 +18,7 @@ export default function OrderCard({ orderDetails }) {
   const { sellers, user } = useContext(UserContext);
   const currentRole = user.role;
   const navigate = useNavigate();
+  const NOVE = 9;
 
   // direcionar de acordo com a role
   const goToOrderDetails = () => {
@@ -25,27 +26,51 @@ export default function OrderCard({ orderDetails }) {
     navigate(`/${user.role}/orders/${id}`, { state: { saleId: id, seller } });
   };
 
+  const statusCss = () => {
+    switch (status) {
+    case 'Pendente':
+      return 'pendente';
+    case 'Preparando':
+      return 'preparando';
+    case 'Em Trânsito':
+      return 'em-transito';
+    case 'Entregue':
+      return 'entregue';
+    default:
+      return '';
+    }
+  };
   return (
     <button
       type="button"
       onClick={ goToOrderDetails }
+      className="order-card"
     >
-      <p data-testid={ `${currentRole}_orders__element-order-id-${id}` }>
-        {`pedido: ${id}`}
+      <p
+        data-testid={ `${currentRole}_orders__element-order-id-${id}` }
+        className="index"
+      >
+        {id < NOVE ? `Pedido 0${id}` : `Pedido ${id}`}
       </p>
-      <p data-testid={ `${currentRole}_orders__element-delivery-status-${id}` }>
+      <p
+        data-testid={ `${currentRole}_orders__element-delivery-status-${id}` }
+        className={ `card-status ${statusCss()}` }
+      >
         {status}
       </p>
-      <div>
+      <div className="order-card-inner">
         <p data-testid={ `${currentRole}_orders__element-order-date-${id}` }>
           {moment(saleDate).format('DD/MM/YYYY')}
         </p>
-        <p data-testid={ `${currentRole}_orders__element-card-price-${id}` }>
-          {Number(totalPrice).toFixed(2).toString().replace('.', ',')}
+        <p>
+          {'R$ '}
+          <span data-testid={ `${currentRole}_orders__element-card-price-${id}` }>
+            {Number(totalPrice).toFixed(2).toString().replace('.', ',')}
+          </span>
         </p>
+        { currentRole === 'seller'
+        && <p>{ `${deliveryAddress}, ${deliveryNumber} ` }</p> }
       </div>
-      { currentRole === 'seller'
-      && <p>{ `${deliveryAddress}, ${deliveryNumber} ` }</p> }
     </button>
   );
 }

@@ -18,17 +18,23 @@ export default function CustomerOrders() {
   return (
     <div>
       <Navbar />
-      {loading
-        ? <h1>Loading...</h1>
-        : (
-          <>
-            { sales.map((order) => (<OrderCard
-              key={ order.id }
-              orderDetails={ order }
-              currentRole="customer"
-            />)) }
-          </>
-        )}
+      <div className="page-order-card">
+        {loading
+          ? <h1>Loading...</h1>
+          : (
+            <>
+              { sales.map((order) => (
+                <div className="order-card-container" key={ order.id }>
+                  <OrderCard
+                    orderDetails={ order }
+                    currentRole="customer"
+                  />
+                </div>
+              )) }
+            </>
+
+          )}
+      </div>
     </div>
   );
 }

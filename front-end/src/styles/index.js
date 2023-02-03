@@ -1,4 +1,9 @@
 import './index.css';
 import './Login.css';
-import './ProductCard.css';
 import './CustomerProducts.css';
+import './NavBar.css';
+import './Orders.css';
+import './Checkout.css';
+import './OrderDetails.css';
+import './AdminManage.css';
+import './Register.css';
