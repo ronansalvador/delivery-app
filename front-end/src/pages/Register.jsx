@@ -49,6 +49,7 @@ export default function Register() {
       <img className="login-page-logo" src={ havingFun } alt="logo" />
       <form className="login-form">
         <label htmlFor="register_name">
+          Nome Completo
           <input
             type="text"
             data-testid="common_register__input-name"
@@ -60,6 +61,7 @@ export default function Register() {
         </label>
 
         <label htmlFor="register_email">
+          E-mail
           <input
             type="text"
             data-testid="common_register__input-email"
@@ -71,6 +73,7 @@ export default function Register() {
         </label>
 
         <label htmlFor="register_password">
+          Senha
           <input
             type="password"
             data-testid="common_register__input-password"
