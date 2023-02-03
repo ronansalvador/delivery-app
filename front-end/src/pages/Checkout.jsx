@@ -100,7 +100,7 @@ export default function Checkout() {
         </div>
         <div className="checkout-datails">
           {loading
-            ? <h1>Loading...</h1>
+            ? <div className="loading" />
             : (
               <form className="checkout-form">
                 <h3 className="checkout-title-details">Detalhes e Endereço de entrega</h3>

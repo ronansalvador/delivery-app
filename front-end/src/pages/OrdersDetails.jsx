@@ -54,7 +54,7 @@ export default function CustomerOrdersDetails() {
       <Navbar />
       <div className="details-page">
         { loading
-          ? <h1>Loading...</h1>
+          ? <div className="loading" />
           : (
             <div className="details-details">
               <div className="detials-description">

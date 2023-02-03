@@ -31,7 +31,7 @@ export default function CustomerProducts() {
       <Navbar />
       <div className="customer-products-container">
         { loading
-          ? <h1>Loading...</h1>
+          ? <div className="loading" />
           : (products.map((product) => (
             <ProductCard
               key={ product.id }
