@@ -19,7 +19,7 @@ export default function AdminManage() {
   const loadUsers = async () => {
     try {
       const headers = { headers: { authorization: user.token } };
-      const newUsers = await axios.get('http://localhost:3001/admin', headers);
+      const newUsers = await axios.get('http://54.91.209.225:3001/admin', headers);
       const otherUsers = newUsers.data.filter((currUser) => (currUser.id !== user.id));
       setUsers(otherUsers);
     } catch (error) {

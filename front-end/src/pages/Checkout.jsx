@@ -34,7 +34,7 @@ export default function Checkout() {
         deliveryAddress,
         deliveryNumber,
       };
-      const response = await axios.post('http://localhost:3001/checkout', data, headers);
+      const response = await axios.post('http://54.91.209.225:3001/checkout', data, headers);
       const userSales = sales;
       setSales([...userSales, response.data]);
       const saleId = response.data.id;

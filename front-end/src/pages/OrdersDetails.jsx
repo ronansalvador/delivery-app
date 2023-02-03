@@ -41,7 +41,7 @@ export default function CustomerOrdersDetails() {
     try {
       const data = { status };
       const headers = { headers: { authorization: user.token } };
-      await axios.put(`http://localhost:3001/sales/status/${currSale.id}`, data, headers);
+      await axios.put(`http://54.91.209.225:3001/sales/status/${currSale.id}`, data, headers);
       getSales();
     } catch (error) {
       const unauthorizedCode = 401;
