@@ -29,14 +29,18 @@ export default function CustomerProducts() {
   return (
     <>
       <Navbar />
-      <div className="customer-products-container">
-        { loading
-          ? <div className="loading" />
-          : (products.map((product) => (
-            <ProductCard
-              key={ product.id }
-              productDetails={ product }
-            />)))}
+
+      <div className="customer-product-page">
+
+        <div className="customer-products-container">
+          { loading
+            ? <div className="loading" />
+            : (products.map((product) => (
+              <ProductCard
+                key={ product.id }
+                productDetails={ product }
+              />)))}
+        </div>
         <div className="cart-btn-container">
           <button
             type="button"

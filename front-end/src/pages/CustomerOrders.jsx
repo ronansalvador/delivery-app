@@ -20,7 +20,7 @@ export default function CustomerOrders() {
       <Navbar />
       <div className="page-order-card">
         {loading
-          ? <h1>Loading...</h1>
+          ? <div className="loading" />
           : (
             <>
               { sales.map((order) => (

@@ -21,7 +21,8 @@
 }
 
 .checkout-item {
-  align-items: center;
+
+  /* align-items: center; */
 
   /* background-color: var(--color-1); */
   border-radius: 5px;
@@ -56,25 +57,25 @@
   color: var(--color-1);
   text-align: left;
   text-indent: 5px;
-  width: 100%;
+  width: 60%;
 }
 
 .checkout-item-quantity {
 
   /* background-color: var(--color-3); */
-  width: 10%;
+  width: 12%;
 }
 
 .checkout-item-price {
 
   /* background-color: blanchedalmond; */
-  width: 10%;
+  width: 12%;
 }
 
 .checkout-item-total {
 
   /* background-color: red; */
-  width: 10%;
+  width: 12%;
 }
 
 .checkout-item-total:last-child {
@@ -87,9 +88,8 @@
   border-left: none;
   cursor: pointer;
   font-weight: 600;
-  height: 100%;
   letter-spacing: 1px;
-  width: 10%;
+  width: 12%;
 }
 
 .checkout-btn-remove:last-child {
@@ -102,14 +102,14 @@
   border-radius: 0 5px 5px 0;
   border-right: 2px solid white;
   height: 100%;
-  width: 10%;
+  width: 12%;
 
 }
 
 .item-name {
   text-align: left;
   text-indent: 5px;
-  width: 100%;
+  width: 60%;
 }
 
 .checkout-datails {
