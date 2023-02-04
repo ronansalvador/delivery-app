@@ -28,7 +28,7 @@ export default function Register() {
   const handleRegister = async () => {
     const data = { name, email, password };
     try {
-      const response = await axios.post('http://54.91.209.225:3001/register', data);
+      const response = await axios.post('https://important-sink-production.up.railway.app/register', data);
       if ('message' in response) return setLoginWarning(response.data);
       saveLocalStorage('user', response.data);
       setUser(JSON.parse(localStorage.getItem('user')));
