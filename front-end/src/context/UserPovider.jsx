@@ -23,7 +23,7 @@ function UserProvider({ children }) {
     if (user === null || user.role === 'administrator') return;
     try {
       const headers = { headers: { authorization: user.token } };
-      const response = await axios.get(`http://54.91.209.225:3001/sales/${user.role}/${user.id}`, headers);
+      const response = await axios.get(`https://important-sink-production.up.railway.app/sales/${user.role}/${user.id}`, headers);
       setSales(response.data);
     } catch (error) {
       const unauthorizedCode = 401;
@@ -40,7 +40,7 @@ function UserProvider({ children }) {
       if (user?.role !== 'customer') return;
       try {
         const headers = { headers: { authorization: user.token } };
-        const allSellers = await axios.get('http://54.91.209.225:3001/seller', headers);
+        const allSellers = await axios.get('https://important-sink-production.up.railway.app/seller', headers);
         setSellers(allSellers.data);
       } catch (error) {
         const unauthorizedCode = 401;
@@ -58,7 +58,7 @@ function UserProvider({ children }) {
       if (user?.role !== 'customer') return;
       try {
         const headers = { headers: { authorization: user.token } };
-        const allProducts = await axios.get('http://54.91.209.225:3001/products', headers);
+        const allProducts = await axios.get('https://important-sink-production.up.railway.app/products', headers);
         setProducts(allProducts.data);
       } catch (error) {
         const unauthorizedCode = 401;

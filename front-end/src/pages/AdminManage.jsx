@@ -19,7 +19,7 @@ export default function AdminManage() {
   const loadUsers = async () => {
     try {
       const headers = { headers: { authorization: user.token } };
-      const newUsers = await axios.get('http://54.91.209.225:3001/admin', headers);
+      const newUsers = await axios.get('https://important-sink-production.up.railway.app/admin', headers);
       const otherUsers = newUsers.data.filter((currUser) => (currUser.id !== user.id));
       setUsers(otherUsers);
     } catch (error) {
@@ -40,7 +40,7 @@ export default function AdminManage() {
     const data = { name, email, password, role };
     try {
       const headers = { headers: { authorization: user.token } };
-      await axios.post('http://localhost:3001/admin', data, headers);
+      await axios.post('https://important-sink-production.up.railway.app/admin', data, headers);
       clearStates();
       setLoginWarning({ message: 'Usuário cadastrado com sucesso!' });
       loadUsers();
@@ -54,7 +54,7 @@ export default function AdminManage() {
   const deleteUser = async (id) => {
     try {
       const headers = { headers: { authorization: user.token } };
-      await axios.delete(`http://localhost:3001/admin/${id}`, headers);
+      await axios.delete(`https://important-sink-production.up.railway.app/admin/${id}`, headers);
       loadUsers();
     } catch (error) {
       console.log(error);

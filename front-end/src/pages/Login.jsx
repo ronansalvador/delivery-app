@@ -38,7 +38,7 @@ export default function Login() {
       password,
     };
     try {
-      const response = await axios.post('http://54.91.209.225:3001/login', data);
+      const response = await axios.post('https://important-sink-production.up.railway.app/login', data);
       if ('message' in response) return setLoginWarning(response.data);
       await setUser(response.data);
       // Redireciona de acordo com a role
