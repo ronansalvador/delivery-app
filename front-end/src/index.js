@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import UserProvider from './context/UserPovider';
@@ -7,11 +8,14 @@ import CartProvider from './context/CartProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserProvider>
-      <CartProvider>
-        <App />
-      </CartProvider>
-    </UserProvider>
+    <BrowserRouter>
+      <UserProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </UserProvider>
+    </BrowserRouter>
+
   </React.StrictMode>,
   document.getElementById('root'),
 );
